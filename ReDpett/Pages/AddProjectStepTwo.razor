@@ -1,0 +1,215 @@
+﻿@page "/add_project_step_2"
+
+@using ReDpett.Pages.Components
+@using ReDpett.Service
+@inject NavigationManager NavigationManager;
+@inject AppDataService data;
+
+<div class="inner-page-wrapper">
+    <div class="header-wrap">
+        <div class="back-top-page">
+            <span class="back-btn">
+                <img src="images/black-arrow.svg" alt="img" />
+            </span>
+        </div>
+    </div>
+    <div class="add-project-adata-wrap">
+        <div class="page-heading-wrap">
+            <h2>ReDPeTT-Frontline</h2>
+            <img src="images/border-svg.svg" alt="img" />
+        </div>
+        <div class="page-info-text">
+            Recommendation: complete the Resident and Job &
+            Site pages at the start of your cohort.
+            Throughout your training, add new Projects (or update entries) as needed.
+        </div>
+        <div class="page-stepper-wrap">
+            <div class="stepper-sepeat active-step">
+                <div class="stepper-count-wrap">
+                    <span>1</span>
+                </div>
+                <p>Resident </p>
+            </div>
+            <div class="stepper-sepeat active-step">
+                <div class="stepper-count-wrap">
+                    <span>2</span>
+                </div>
+                <p>Job & Site</p>
+            </div>
+            <div class="stepper-sepeat">
+                <div class="stepper-count-wrap">
+                    <span>3</span>
+                </div>
+                <p>Projects</p>
+            </div>
+        </div>
+        <div class="all-form-wraper">
+            <div class="form-set-repeat">
+                <div class="form-group">
+                    <label>Professional Background</label>
+                    <select class="form-control " @bind=Professional_Background>
+                        <option>Select</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Employer</label>
+                    <input type="text" placeholder="" class="form-control " @bind=Employer />
+                </div>
+                <div class="form-group">
+                    <label>Job Title</label>
+                    <input type="text" placeholder="" class="form-control " @bind=JobTitle />
+                </div>
+                <div class="form-group">
+                    <label>Years on Job</label>
+                    <input type="text" placeholder="" class="form-control " @bind=YearsOnJob />
+                </div>
+                <div class="form-group">
+                    <label>Supervisor Name</label>
+                    <input type="text" placeholder="Select" class="form-control " @bind=SupervisorName />
+                </div>
+                <div class="form-group">
+                    <label>Site Address</label>
+                    <input type="text" placeholder="" class="form-control " @bind=SiteAddress />
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" placeholder="" class="form-control " @bind=City />
+                </div>
+                <div class="form-group">
+                    <label>State/Region/Provinc</label>
+                    <input type="text" placeholder="" class="form-control " @bind=State_Region_Pro />
+                </div>
+                <div class="form-group">
+                    <label>Postal / Zip Code</label>
+                    <input type="text" placeholder="" class="form-control " @bind=Postal_Zip />
+                </div>
+                <div class="form-group">
+                    <label>Country</label>
+                    <select class="form-control " @bind=Country>
+                        <option>Select</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>RPFL19_Longitude</label>
+                    <input type="text" placeholder="" readonly class="form-control " @bind=RPFL19_Longitude />
+                </div>
+                <div class="form-group">
+                    <label>RPFL20_Latitude</label>
+                    <input type="text" placeholder="" readonly class="form-control " @bind=RPFL20_Latitude />
+                </div>
+                <div class="form-group">
+                    <label>Secondary Subnational Unit</label>
+                    <input type="text" placeholder="" class="form-control " @bind=Secondary_Subnational_Unit />
+                </div>
+                <div class="form-group">
+                    <label>Tertiary Subnational Unit</label>
+                    <input type="text" placeholder="" class="form-control " @bind=Tertiary_Subnational_Unit />
+                </div>
+                <div class="form-group">
+                    <label>Facility Name</label>
+                    <input type="text" placeholder="" class="form-control " @bind=FacilityName />
+                </div>
+                <div class="custom-radio-wrap">
+                    <p class="radio-label">Facility Level</p>
+                    <label for="radio-1" class="radio-btn-wrap">
+                        <input type="radio" id="radio-1" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "1")>
+                        <span class="checkmark"></span>
+                        <p class="radio-btn-label">
+                            National/Central
+                        </p>
+                    </label>
+                    <label for="radio-2" class="radio-btn-wrap">
+                        <input type="radio" id="radio-2" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "1")>
+                        <span class="checkmark"></span>
+                        <p class="radio-btn-label">
+                            Regional
+                        </p>
+                    </label>
+                    <label for="radio-3" class="radio-btn-wrap">
+                        <input type="radio" id="radio-3" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "1")>
+                        <span class="checkmark"></span>
+                        <p class="radio-btn-label">
+                            District
+                        </p>
+                    </label>
+                    <label for="radio-4" class="radio-btn-wrap">
+                        <input type="radio" id="radio-4" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "1")>
+                        <span class="checkmark"></span>
+                        <p class="radio-btn-label">
+                            Health Facility
+                        </p>
+                    </label>
+                    <label for="radio-5" class="radio-btn-wrap">
+                        <input type="radio" id="radio-5" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "1")>
+                        <span class="checkmark"></span>
+                        <p class="radio-btn-label">
+                            Other
+                        </p>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>CODE: Enable if Other is Facility Level</label>
+                    <input type="text" placeholder="" value="Other Facility" readonly class="form-control " />
+                </div>
+            </div>
+            <div class="form-button-wrap">
+                <button class="button primary-btn-sky-blue" @onclick=GoBackPage>Back</button>
+                <button class="button primary-btn" @onclick=SaveData>Save</button>
+                <button class="button" @onclick=GoNextPage>Next</button>
+            </div>
+        </div>
+    </div>
+    <Footer />
+</div>
+
+@code {
+
+    public string Professional_Background { get; set; }
+    public string Employer { get; set; }
+    public string JobTitle { get; set; }
+    public int YearsOnJob { get; set; }
+    public string SupervisorName { get; set; }
+    public string SiteAddress { get; set; }
+    public string City { get; set; }
+    public string State_Region_Pro { get; set; }
+    public string Postal_Zip { get; set; }
+    public string Country { get; set; }
+    public int RPFL19_Longitude { get; set; }
+    public string RPFL20_Latitude { get; set; }
+    public string Secondary_Subnational_Unit { get; set; }
+    public string Tertiary_Subnational_Unit { get; set; }
+    public string FacilityName { get; set; }
+    public string FacilityLevel { get; set; }
+
+    private void GoNextPage()
+    {
+        SaveData();
+        NavigationManager.NavigateTo("/add_project_step_3");
+    }
+
+    private void GoBackPage()
+    {
+        SaveData();
+        NavigationManager.NavigateTo("/add_project_step_1");
+    }
+
+    private void SaveData()
+    {
+        data.Professional_Background = Professional_Background;
+        data.Employer = Employer;
+        data.JobTitle = JobTitle;
+        data.YearsOnJob = YearsOnJob;
+        data.SupervisorName = SupervisorName;
+        data.SiteAddress = SiteAddress;
+        data.City = City;
+        data.State_Region_Pro = State_Region_Pro;
+        data.Postal_Zip = Postal_Zip;
+        data.Country = Country;
+        data.RPFL19_Longitude = RPFL19_Longitude;
+        data.RPFL20_Latitude = RPFL20_Latitude;
+        data.Secondary_Subnational_Unit = Secondary_Subnational_Unit;
+        data.Tertiary_Subnational_Unit = Tertiary_Subnational_Unit;
+        data.FacilityName = FacilityName;
+        data.FacilityLevel = FacilityLevel;
+    }
+}

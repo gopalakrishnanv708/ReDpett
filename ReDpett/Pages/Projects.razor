@@ -1,0 +1,50 @@
+﻿@page "/Projects"
+
+@using ReDpett.Pages.Components
+
+<div class="inner-page-wrapper">
+    <div class="page-heading-wrap">
+        <h2>Project Activity</h2>
+        <img src="images/border-svg.svg" alt="img" />
+    </div>
+    <div class="add-project-btn-wrap">
+        <a href="add-project-step1.html" class="add-btn"><span>Add Project</span> <img src="images/add-white.svg" alt="img" /></a>
+    </div>
+    <div class="page-heading-wrap">
+        <h2>Current Projects</h2>
+        <img src="images/border-svg.svg" alt="img" />
+    </div>
+    <div class="project-listing-wrap">
+        <p class="projects-listing-subhead">Frontline Tier</p>
+        <div class="project-list-repeat">
+            <div class="project-list-data">
+                <h3>Project Name </h3>
+                <p class="project-created-by">Created by trainee name</p>
+                <p>2022-12-15</p>
+            </div>
+            <div class="project-list-action">
+                <span class="priject-list-action-btn"><img src="images/edit.svg" alt="img" /></span>
+                <span class="priject-list-action-btn"><img src="images/cloud.svg" alt="img" /></span>
+                <span class="priject-list-action-btn"><img src="images/close.svg" alt="img" /></span>
+            </div>
+        </div>
+        <div class="project-list-repeat">
+            <div class="project-list-data">
+                <h3>Project Name </h3>
+                <p class="project-created-by">Created by trainee name</p>
+                <p>2022-12-15</p>
+            </div>
+            <div class="project-list-action">
+                <span class="priject-list-action-btn"><img src="images/edit.svg" alt="img" /></span>
+                <span class="priject-list-action-btn"><img src="images/blue-cloud.svg" alt="img" /></span>
+                <span class="priject-list-action-btn"><img src="images/close.svg" alt="img" /></span>
+            </div>
+        </div>
+    </div>
+    <a href="javascript:void()" class="support-button"><img src="images/headset-help.svg" alt="img" /></a>
+     <Footer/>
+</div>
+
+@code {
+
+}

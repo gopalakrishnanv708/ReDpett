@@ -1,0 +1,83 @@
+﻿@page "/Home"
+
+@using ReDpett.Pages.Components
+
+<div class="inner-page-wrapper">
+    <div class="header-wrap">
+        <div class="user-info-hdr-data">
+            <span class="user-img">
+                <img src="images/profile-img.png" alt="img" />
+            </span>
+            <div class="user-info-data">
+                <p>Hello</p>
+                <h2>John Dee</h2>
+            </div>
+        </div>
+        <div class="right-side-header">
+            <span class="notification-icon-wrap">
+                <img src="images/notification-icon.svg" alt="img" />
+            </span>
+        </div>
+    </div>
+    <div class="video-slider-wrap">
+        <div id="video-slider" class="owl-carousel custom-slider-wrap">
+            <div class="slide-repeat">
+                <div class="video-box-wrap">
+                    <video controls>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        <source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
+                        Your browser does not support HTML video.
+                    </video>
+                </div>
+                <div class="slider-inner-data-wrap">
+                    <h2>ReDPeTT-Frontline</h2>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form</p>
+                </div>
+            </div>
+            @*<div class="slide-repeat">
+                <div class="video-box-wrap">
+                    <video controls>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        <source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
+                        Your browser does not support HTML video.
+                    </video>
+                </div>
+                <div class="slider-inner-data-wrap">
+                    <h2>ReDPeTT-Frontline</h2>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form</p>
+                </div>
+            </div>*@
+        </div>
+    </div>
+    <div class="manage-products-wrapper">
+        <a href="javascript:void();" class="mp-data-repeat active">
+            <div class="mp-data-name">
+                manage project
+            </div>
+            <div class="mp-data-arrow">
+                <span>
+                    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.300013 0.774999C0.483346 0.591666 0.716679 0.5 1.00001 0.5C1.28335 0.5 1.51668 0.591666 1.70001 0.774999L6.30001 5.375C6.40001 5.475 6.47101 5.58333 6.51301 5.7C6.55435 5.81667 6.57501 5.94167 6.57501 6.075C6.57501 6.20833 6.55001 6.33767 6.50001 6.463C6.45001 6.58767 6.38335 6.69167 6.30001 6.775L1.70001 11.375C1.51668 11.5583 1.28335 11.65 1.00001 11.65C0.716679 11.65 0.483346 11.5583 0.300012 11.375C0.116679 11.1917 0.0250116 10.9583 0.0250116 10.675C0.0250116 10.3917 0.116679 10.1583 0.300012 9.975L4.20001 6.075L0.300013 2.175C0.116679 1.99167 0.025012 1.75833 0.025012 1.475C0.025012 1.19167 0.116679 0.958333 0.300013 0.774999Z" fill="#141414" />
+                    </svg>
+                </span>
+            </div>
+        </a>
+        <a href="javascript:void();" class="mp-data-repeat">
+            <div class="mp-data-name">
+                Sign In
+            </div>
+            <div class="mp-data-arrow">
+                <span>
+                    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.300013 0.774999C0.483346 0.591666 0.716679 0.5 1.00001 0.5C1.28335 0.5 1.51668 0.591666 1.70001 0.774999L6.30001 5.375C6.40001 5.475 6.47101 5.58333 6.51301 5.7C6.55435 5.81667 6.57501 5.94167 6.57501 6.075C6.57501 6.20833 6.55001 6.33767 6.50001 6.463C6.45001 6.58767 6.38335 6.69167 6.30001 6.775L1.70001 11.375C1.51668 11.5583 1.28335 11.65 1.00001 11.65C0.716679 11.65 0.483346 11.5583 0.300012 11.375C0.116679 11.1917 0.0250116 10.9583 0.0250116 10.675C0.0250116 10.3917 0.116679 10.1583 0.300012 9.975L4.20001 6.075L0.300013 2.175C0.116679 1.99167 0.025012 1.75833 0.025012 1.475C0.025012 1.19167 0.116679 0.958333 0.300013 0.774999Z" fill="#141414" />
+                    </svg>
+                </span>
+            </div>
+        </a>
+    </div>
+      <Footer/>
+</div>
+
+@code {
+
+}

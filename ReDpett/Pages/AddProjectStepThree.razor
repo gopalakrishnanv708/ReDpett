@@ -1,0 +1,157 @@
+﻿@page "/add_project_step_3"
+
+@using ReDpett.Modal
+@using ReDpett.Pages.Components
+@using ReDpett.Service
+
+@inject AppDataService data;
+
+@inject NavigationManager NavigationManager;
+
+<div class="inner-page-wrapper">
+    <div class="header-wrap">
+        <div class="back-top-page">
+            <span class="back-btn">
+                <img src="images/black-arrow.svg" alt="img" />
+            </span>
+        </div>
+    </div>
+    <div class="add-project-adata-wrap">
+        <div class="page-heading-wrap">
+            <h2>ReDPeTT-Frontline</h2>
+            <img src="images/border-svg.svg" alt="img" />
+        </div>
+        <div class="page-info-text">
+            Recommendation: complete the Resident and Job &
+            Site pages at the start of your cohort.
+            Throughout your training, add new Projects (or update entries) as needed.
+        </div>
+        <div class="page-stepper-wrap">
+            <div class="stepper-sepeat active-step">
+                <div class="stepper-count-wrap">
+                    <span>1</span>
+                </div>
+                <p>Resident </p>
+            </div>
+            <div class="stepper-sepeat active-step">
+                <div class="stepper-count-wrap">
+                    <span>2</span>
+                </div>
+                <p>Job & Site</p>
+            </div>
+            <div class="stepper-sepeat active-step">
+                <div class="stepper-count-wrap">
+                    <span>3</span>
+                </div>
+                <p>Projects</p>
+            </div>
+        </div>
+        <div class="page-heading-wrap">
+            <h2>Project Reports and Files</h2>
+            <img src="images/border-svg.svg" alt="img" />
+        </div>
+        <div class="page-info-text">
+            You may create up to 10 entries. For each attachment, please provide a report title and select the type of report. You can
+            also provide a report title and
+            report type without providing an attachment.
+        </div>
+        <div class="all-form-wraper">
+            <div class="form-set-repeat">
+                <!---Entry preview Section--->
+                @*<div class="add-new-entry-wrap added-entry-preview">
+                    <div class="entry-listing-repeat">
+                        <p class="entry-left-data">Project Attachment</p>
+                        <span class="entry-info">serious-woman-making....</span>
+                    </div>
+                    <div class="entry-listing-repeat">
+                        <p class="entry-left-data">Report Title (required ...</p>
+                        <span class="entry-info">Test</span>
+                    </div>
+                    <div class="entry-listing-repeat">
+                        <p class="entry-left-data">Type of Report ..</p>
+                        <span class="entry-info">Outbreak Investigation Report</span>
+                    </div>
+                </div>*@
+                <!---Entry preview Section--->
+                <div class="add-new-entry-wrap" id="add-new-entry" @onclick=OpenEntryModal>
+                    <img src="images/plus-circle.svg" alt="img" />
+                    <p>Add Entry</p>
+                </div>
+            </div>
+            <div class="form-button-wrap">
+                <button class="button primary-btn-sky-blue" @onclick=GoBackPage>Back</button>
+                <button class="button primary-btn">Save</button>
+                <button class="button" @onclick=GoNextPage>Next</button>
+            </div>
+        </div>
+    </div>
+    <div id="entry-modal" class=@ModalClass>
+        <div class="modal-mid-wrap">
+            <div class="add-entry-modal-inner-data">
+                <h2 class="heading">Project Reports and Files</h2>
+                <p class="info-text">
+                    You may create up to 10 entries. For each attachment, please provide a
+                    report title and select the type of report. You can also provide
+                    a report title and report type without providing an attachment.
+                </p>
+                <div class="entry-modal-data-hold">
+                    <div class="form-group entry-add-image-area">
+                        <label>Project Attachment</label>
+                        <div class="entry-choose-file-area">
+                            <div class="upload-image-area">
+                                <p>Choose File</p>
+                                <span class="upload-img-icon">
+                                    <img src="images/upload-img.svg" alt="img" />
+                                </span>
+                                <input type="file" />
+                            </div>
+                            <div class="image-preview-area">
+                                <span><img src="images/placeholder-img.png" alt="img" /></span>
+                                <p>serious-woman-making outdoors.jpg</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Report Title (required for file uploads) *</label>
+                        <input type="text" placeholder="Test" class="form-control ">
+                    </div>
+                    <div class="form-group">
+                        <label>Type of Report (required for uploads or if title is provided without upload) *</label>
+                        <select class="form-control ">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="form-button-wrap">
+                        <button class="button primary-btn" id="close-modal" @onclick=CloseEntryModal>Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <Footer/>
+</div>
+
+@code {
+
+    private string ModalClass { get; set; } = "add-entry-modal-wrapper hide-modal";
+    public List<FileData> File_Att_Info { get; set; }
+
+    private void OpenEntryModal(){
+        ModalClass = "add-entry-modal-wrapper";
+    }
+
+    private void CloseEntryModal()
+    {
+        ModalClass = "add-entry-modal-wrapper hide-modal";
+    }
+
+    private void GoNextPage()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+    private void GoBackPage()
+    {
+        NavigationManager.NavigateTo("/add_project_step_2");
+    }
+}
