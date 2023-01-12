@@ -5,12 +5,12 @@
 @using ReDpett.Service
 
 @inject AppDataService data;
-
 @inject NavigationManager NavigationManager;
+@inject ISaveDataService _dataService;
 
 <div class="inner-page-wrapper">
     <div class="header-wrap">
-        <div class="back-top-page">
+        <div class="back-top-page" @onclick=GoBackPage>
             <span class="back-btn">
                 <img src="images/black-arrow.svg" alt="img" />
             </span>
@@ -27,19 +27,19 @@
             Throughout your training, add new Projects (or update entries) as needed.
         </div>
         <div class="page-stepper-wrap">
-            <div class="stepper-sepeat active-step">
+            <div class="stepper-sepeat active-step" @onclick=GoToStepOne>
                 <div class="stepper-count-wrap">
                     <span>1</span>
                 </div>
                 <p>Resident </p>
             </div>
-            <div class="stepper-sepeat active-step">
+            <div class="stepper-sepeat active-step" @onclick=GoBackPage>
                 <div class="stepper-count-wrap">
                     <span>2</span>
                 </div>
                 <p>Job & Site</p>
             </div>
-            <div class="stepper-sepeat active-step">
+            <div class="stepper-sepeat active-step" @onclick=GoToStepThree>
                 <div class="stepper-count-wrap">
                     <span>3</span>
                 </div>
@@ -51,27 +51,36 @@
             <img src="images/border-svg.svg" alt="img" />
         </div>
         <div class="page-info-text">
-            You may create up to 10 entries. For each attachment, please provide a report title and select the type of report. You can
+            You may create up to 10 entries. For each attachment, please provide a report title and select the category of report. You can
             also provide a report title and
             report type without providing an attachment.
         </div>
         <div class="all-form-wraper">
             <div class="form-set-repeat">
                 <!---Entry preview Section--->
-                @*<div class="add-new-entry-wrap added-entry-preview">
-                    <div class="entry-listing-repeat">
-                        <p class="entry-left-data">Project Attachment</p>
-                        <span class="entry-info">serious-woman-making....</span>
-                    </div>
-                    <div class="entry-listing-repeat">
-                        <p class="entry-left-data">Report Title (required ...</p>
-                        <span class="entry-info">Test</span>
-                    </div>
-                    <div class="entry-listing-repeat">
-                        <p class="entry-left-data">Type of Report ..</p>
-                        <span class="entry-info">Outbreak Investigation Report</span>
-                    </div>
-                </div>*@
+                @if (File_Att_Info.Count > 0)
+                {
+                    @foreach (FileData info in File_Att_Info)
+                    {
+                        <div class="add-new-entry-wrap added-entry-preview">
+                            @if (!String.IsNullOrEmpty(info.Att_FileName))
+                            {
+                                <div class="entry-listing-repeat">
+                                    <p class="entry-left-data">Project Attachment</p>
+                                    <span class="entry-info">@info.Att_FileName</span>
+                                </div>
+                            }
+                            <div class="entry-listing-repeat">
+                                <p class="entry-left-data">Report Title (required ...</p>
+                                <span class="entry-info">@info.Report_Title</span>
+                            </div>
+                            <div class="entry-listing-repeat">
+                                <p class="entry-left-data">Category of Report ..</p>
+                                <span class="entry-info">@info.TypeOfReport</span>
+                            </div>
+                        </div>
+                    }
+                }
                 <!---Entry preview Section--->
                 <div class="add-new-entry-wrap" id="add-new-entry" @onclick=OpenEntryModal>
                     <img src="images/plus-circle.svg" alt="img" />
@@ -80,8 +89,8 @@
             </div>
             <div class="form-button-wrap">
                 <button class="button primary-btn-sky-blue" @onclick=GoBackPage>Back</button>
-                <button class="button primary-btn">Save</button>
-                <button class="button" @onclick=GoNextPage>Next</button>
+                <button class="button primary-btn" @onclick=OnSaveData>Save</button>
+                <button class="button" @onclick=GoNextPage>Submit</button>
             </div>
         </div>
     </div>
@@ -91,7 +100,7 @@
                 <h2 class="heading">Project Reports and Files</h2>
                 <p class="info-text">
                     You may create up to 10 entries. For each attachment, please provide a
-                    report title and select the type of report. You can also provide
+                    report title and select the category of report. You can also provide
                     a report title and report type without providing an attachment.
                 </p>
                 <div class="entry-modal-data-hold">
@@ -103,22 +112,31 @@
                                 <span class="upload-img-icon">
                                     <img src="images/upload-img.svg" alt="img" />
                                 </span>
-                                <input type="file" />
+                                <InputFile type="file" OnChange=@OnInputFileChange />
                             </div>
-                            <div class="image-preview-area">
-                                <span><img src="images/placeholder-img.png" alt="img" /></span>
-                                <p>serious-woman-making outdoors.jpg</p>
-                            </div>
+                            @if (browserFileName != null)
+                            {
+                                <div class="image-preview-area">
+                                    <span><img src="images/placeholder-img.png" alt="img" /></span>
+                                    <p>@browserFileName</p>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Report Title (required for file uploads) *</label>
-                        <input type="text" placeholder="Test" class="form-control ">
+                        <input type="text" placeholder="Report Title" class="form-control " @bind=ReportTitle style=@IsReportTitleError @oninput=OnInputReportTitleChange>
                     </div>
                     <div class="form-group">
-                        <label>Type of Report (required for uploads or if title is provided without upload) *</label>
-                        <select class="form-control ">
-                            <option>Select</option>
+                        <label>Category of Report (required for uploads or if title is provided without upload) *</label>
+                        <select class="form-control " @bind=TypeOfReport style=@IsTypeReportError @oninput=OnInputTypeReportChange>
+                            <option value="">Select</option>
+                            <option value="Data Quality Audit Report">Data Quality Audit Report</option>
+                            <option value="Surveillance Report">Surveillance Report</option>
+                            <option value="Outbreak Investigation Report">Outbreak Investigation Report</option>
+                            <option value="Problem Analysis Report">Problem Analysis Report</option>
+                            <option value="Case Investigation Report">Case Investigation Report</option>
+                            <option value="Expanded Summary Surveillance Report">Expanded Summary Surveillance Report</option>
                         </select>
                     </div>
                     <div class="form-button-wrap">
@@ -128,30 +146,149 @@
             </div>
         </div>
     </div>
-    <Footer/>
+    <Footer />
 </div>
 
 @code {
 
     private string ModalClass { get; set; } = "add-entry-modal-wrapper hide-modal";
+    private IBrowserFile browserFile { get; set; }
+    private string browserFileName { get; set; }
+    private string ReportTitle { get; set; }
+    private string TypeOfReport { get; set; }
+    public string IsFileError { get; set; }
+    public string IsReportTitleError { get; set; }
+    public string IsTypeReportError { get; set; }
     public List<FileData> File_Att_Info { get; set; }
 
-    private void OpenEntryModal(){
+    protected override void OnInitialized()
+    {
+        File_Att_Info = new List<FileData>();
+    }
+
+    public void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        browserFile = e.File;
+        browserFileName = e.File.Name;
+        IsFileError = "";
+    }
+
+    public void OnInputReportTitleChange()
+    {
+        IsReportTitleError = "";
+    }
+
+    public void OnInputTypeReportChange()
+    {
+        IsTypeReportError = "";
+    }
+
+    private void OpenEntryModal()
+    {
         ModalClass = "add-entry-modal-wrapper";
     }
 
-    private void CloseEntryModal()
+    private async void CloseEntryModal()
     {
-        ModalClass = "add-entry-modal-wrapper hide-modal";
+        if (await ValidateData())
+        {
+            ModalClass = "add-entry-modal-wrapper hide-modal";
+            FileData f_data = new FileData()
+                {
+                    Att_FileName = browserFileName,
+                    Report_Title = ReportTitle,
+                    TypeOfReport = TypeOfReport,
+                    File_Att = browserFile
+                };
+            File_Att_Info.Add(f_data);
+            browserFile = null;
+            browserFileName = null;
+            ReportTitle = null;
+            TypeOfReport = null;
+            StateHasChanged();
+        }
+    }
+
+    private async Task<bool> ValidateData()
+    {
+        bool IsValid = true;
+
+        //if (browserFile == null)
+        //{
+        //    IsFileError = "border-color:red";
+        //}
+        if (String.IsNullOrWhiteSpace(ReportTitle))
+        {
+            IsReportTitleError = "border-color:red";
+        }
+        if (String.IsNullOrWhiteSpace(TypeOfReport))
+        {
+            IsTypeReportError = "border-color:red";
+        }
+
+        if ((String.IsNullOrWhiteSpace(ReportTitle)) || (String.IsNullOrWhiteSpace(TypeOfReport)))
+        {
+            IsValid = false;
+            await Application.Current.MainPage.DisplayAlert("Missing Required Fields", "Please provide the missing required fields..", "Ok");
+        }
+        StateHasChanged();
+        return IsValid;
     }
 
     private void GoNextPage()
     {
+        // _dataService.CreateOfflineDB();
+        data.FETP = null;
+        data.CohortNumber = null;
+        data.CohortEndDate = null;
+        data.CohortStartDate = null;
+        data.ResidentName = null;
+        data.Given_FirstName = null;
+        data.MiddleName = null;
+        data.Sur_LastName = null;
+        data.DOB = null;
+        data.Age = 0;
+        data.Sex = null;
+        data.Email = null;
+        data.Phone = null;
+        data.Professional_Background = null;
+        data.Employer = null;
+        data.JobTitle = null;
+        data.YearsOnJob = 0;
+        data.SupervisorName = null;
+        data.SiteAddress = null;
+        data.City = null;
+        data.State_Region_Pro = null;
+        data.Postal_Zip = null;
+        data.Country = null;
+        data.RPFL19_Longitude = 0;
+        data.RPFL20_Latitude = null;
+        data.Secondary_Subnational_Unit = null;
+        data.Tertiary_Subnational_Unit = null;
+        data.FacilityName = null;
+        data.FacilityLevel = null;
+        data.File_Att_Info = null;
         NavigationManager.NavigateTo("/");
     }
 
     private void GoBackPage()
     {
         NavigationManager.NavigateTo("/add_project_step_2");
+    }
+
+    private void GoToStepOne()
+    {
+        NavigationManager.NavigateTo("/add_project_step_1");
+    }
+
+    private async void GoToStepThree()
+    {
+        NavigationManager.NavigateTo("/add_project_step_3");
+    }
+
+    private async void OnSaveData()
+    {
+        //SaveData();
+        await Application.Current.MainPage.DisplayAlert("Alert!", "Data Saved..", "OK");
     }
 }

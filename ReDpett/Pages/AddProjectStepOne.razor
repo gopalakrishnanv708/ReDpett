@@ -2,13 +2,14 @@
 
 @using ReDpett.Pages.Components
 @using ReDpett.Service
+@using Microsoft.Maui.Controls
 
 @inject NavigationManager NavigationManager;
 @inject AppDataService data;
 
 <div class="inner-page-wrapper">
     <div class="header-wrap">
-        <div class="back-top-page">
+        <div class="back-top-page" @onclick=GoPrevPage>
             <span class="back-btn">
                 <img src="images/black-arrow.svg" alt="img" />
             </span>
@@ -25,20 +26,20 @@
             Throughout your training, add new Projects (or update entries) as needed.
         </div>
         <div class="page-stepper-wrap">
-            <div class="stepper-sepeat active-step">
+            <div class="stepper-sepeat active-step" @onclick=GoToStepOne>
                 <div class="stepper-count-wrap">
                     <span>1</span>
                 </div>
                 <p>Resident </p>
             </div>
-            <div class="stepper-sepeat">
+            <div class="stepper-sepeat" @onclick=GoNextPage>
                 <div class="stepper-count-wrap">
                     <span>2</span>
                 </div>
                 <p>Job & Site</p>
             </div>
             <div class="stepper-sepeat">
-                <div class="stepper-count-wrap">
+                <div class="stepper-count-wrap" @onclick=GoToStepThree>
                     <span>3</span>
                 </div>
                 <p>Projects</p>
@@ -48,15 +49,49 @@
             <div class="form-set-repeat">
                 <div class="form-group">
                     <label>FETP *</label>
-                    <select class="form-control " @bind=FETP>
-                        <option>Select FETP</option>
+                    <select class="form-control " @bind=FETP style=@IsFETPError @oninput=OnInputFETPChange>
+                        <option value="">Select FETP</option>
+                        <option value="5-Bangladesh FETP-Frontline">5-Bangladesh FETP-Frontline</option>
+                        <option value="6-Belize FETP-Non-Standard Frontline">6-Belize FETP-Non-Standard Frontline</option>
+                        <option value="8-Benin FETP-Frontline">8-Benin FETP-Frontline</option>
+                        <option value="10-Brazil FETP-Frontline">10-Brazil FETP-Frontline</option>
+                        <option value="11-Burkina Faso FETP-Frontline">11-Burkina Faso FETP-Frontline</option>
+                        <option value="13-Cameroon FETP-Frontline">13-Cameroon FETP-Frontline</option>
+                        <option value="19-China FETP-Frontline">19-China FETP-Frontline</option>
+                        <option value="21-Colombia FETP (Program de Epidemilogia Aplicada)-Frontline">21-Colombia FETP (Program de Epidemilogia Aplicada)-Frontline</option>
+                        <option value="24-Costa Rica FETP-Non-Standard Frontline">24-Costa Rica FETP-Non-Standard Frontline</option>
+                        <option value="25-Cote d'Ivoire FETP-Frontline">25-Cote d'Ivoire FETP-Frontline</option>
+                        <option value="27-Democratic Republic of the Congo FETP-Frontline">27-Democratic Republic of the Congo FETP-Frontline</option>
+                        <option value="31-El Salvador FETP-Non-Standard Frontline">31-El Salvador FETP-Non-Standard Frontline</option>
+                        <option value="33-Ethiopia FETP-Frontline">33-Ethiopia FETP-Frontline</option>
+                        <option value="34-The Gambia FETP-Frontline">34-The Gambia FETP-Frontline</option>
+                        <option value="36-Ghana Public Health School Without Walls">36-Ghana Public Health School Without Walls</option>
+                        <option value="38-Ghana FETP-Frontline">38-Ghana FETP-Frontline</option>
+                        <option value="39-Grenada Field Epidemiology Training Program-Frontline">39-Grenada Field Epidemiology Training Program-Frontline</option>
+                        <option value="41-Guatemala FETP-Non-Standard Frontline">41-Guatemala FETP-Non-Standard Frontline</option>
+                        <option value="42-Guinea FETP-Frontline">42-Guinea FETP-Frontline</option>
+                        <option value="43-Guinea-Bissau FETP-Frontline">43-Guinea-Bissau FETP-Frontline</option>
+                        <option value="45-Haiti FETP-Non-Standard Frontline">45-Haiti FETP-Non-Standard Frontline</option>
+                        <option value="47-Honduras FETP-Non-Standard Frontline">47-Honduras FETP-Non-Standard Frontline</option>
+                        <option value="51-India Epidemic Intelligence Service">51-India Epidemic Intelligence Service</option>
+                        <option value="59-Kenya FETP-Non-Standard Frontline">59-Kenya FETP-Non-Standard Frontline</option>
+                        <option value="62-Liberia FETP-Frontline">62-Liberia FETP-Frontline</option>
+                        <option value="63-Malawi FETP-Frontline">63-Malawi FETP-Frontline</option>
+                        <option value="64-Mali FETP-Frontline">64-Mali FETP-Frontline</option>
+                        <option value="65-Mauritania FETP-Frontline">65-Mauritania FETP-Frontline</option>
+                        <option value="70-Myanmar FETP-Frontline">70-Myanmar FETP-Frontline</option>
+                        <option value="73-Nigeria FETP-Frontline">73-Nigeria FETP-Frontline</option>
+                        <option value="75-Pakistan FETP-Frontline">75-Pakistan FETP-Frontline</option>
+                        <option value="78-Paraguay FETP-Frontline">78-Paraguay FETP-Frontline</option>
+                        <option value="81-Peru FETP-Frontline">81-Peru FETP-Frontline</option>
+                        <option value="85-Senegal FETP-Frontline">85-Senegal FETP-Frontline</option>
+                        <option value="87-Sierra Leone FETP-Frontline">87-Sierra Leone FETP-Frontline</option>
+                        <option value="89-South Africa FETP-Frontline">89-South Africa FETP-Frontline</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Cohort Number *</label>
-                    <select class="form-control " @bind=CohortNumber>
-                        <option>Select</option>
-                    </select>
+                    <input class="form-control " type="text" placeholder="Cohort Number" @bind=CohortNumber style=@IsChrNumError @oninput=OnInputCohortNumberChange />
                 </div>
                 <div class="form-group">
                     <label>Cohort Start Date</label>
@@ -74,9 +109,8 @@
                 </div>
                 <div class="form-group">
                     <label>Resident Name</label>
-                    <select class="form-control " @bind=ResidentName>
-                        <option>Select</option>
-                    </select>
+                    <input type="text" placeholder="Resident Name" class="form-control " @bind=ResidentName />
+                    
                 </div>
                 <div class="form-group">
                     <label>Given/First Name</label>
@@ -92,7 +126,7 @@
                 </div>
                 <div class="form-group">
                     <label>Date of Birth *</label>
-                    <input type="date" class="form-control date-cal" @bind=DOB />
+                    <input type="date" class="form-control date-cal" @bind=DOB style=@IsDOBError @oninput=OnInputDOBChange />
                 </div>
                 <div class="form-group">
                     <label>Age</label>
@@ -100,7 +134,7 @@
                 </div>
                 <div class="form-group">
                     <label>Sex *</label>
-                    <select class="form-control " @bind=Sex>
+                    <select class="form-control " @bind=Sex style=@IsSexError @oninput=OnInputSexChange>
                         <option value="">Select</option>
                         <option value="MALE">Male</option>
                         <option value="FEMALE">Female</option>
@@ -122,7 +156,7 @@
                     <input type="text" id="mobile_code" class="form-control" placeholder="" name="name" @bind=Phone>
                 </div>
                 <div class="form-button-wrap">
-                    <button class="button primary-btn" @onclick=SaveData>Save</button>
+                    <button class="button primary-btn" @onclick=OnSaveData>Save</button>
                     <button class="button" @onclick=GoNextPage>Next</button>
                 </div>
             </div>
@@ -132,7 +166,6 @@
 </div>
 
 @code {
-
     public string FETP { get; set; }
     public string CohortNumber { get; set; }
     public DateTime CohortEndDate { get; set; }
@@ -146,22 +179,116 @@
     public string Sex { get; set; }
     public string Email { get; set; }
     public string Phone { get; set; }
+    public string IsFETPError { get; set; }
+    public string IsChrNumError { get; set; }
+    public string IsDOBError { get; set; }
+    public string IsSexError { get; set; }
 
     protected override void OnInitialized()
     {
-        // Subscribe to the event
-        NavigationManager.LocationChanged += LocationChanged;
-        base.OnInitialized();
+        FETP = data.FETP;
+        CohortNumber = data.CohortNumber;
+        CohortEndDate = Convert.ToDateTime(data.CohortEndDate);
+        CohortStartDate = Convert.ToDateTime(data.CohortStartDate);
+        ResidentName = data.ResidentName;
+        Given_FirstName = data.Given_FirstName;
+        MiddleName = data.MiddleName;
+        Sur_LastName = data.Sur_LastName;
+        DOB = Convert.ToDateTime(data.DOB);
+        Age = data.Age;
+        Sex = data.Sex;
+        Email = data.Email;
+        Phone = data.Phone;
     }
+
     void LocationChanged(object sender, LocationChangedEventArgs e)
     {
         StateHasChanged();
     }
 
-    private void GoNextPage()
+    public void OnInputFETPChange()
+    {
+        IsFETPError = "";
+    }
+
+    public void OnInputCohortNumberChange()
+    {
+        IsChrNumError = "";
+    }
+
+    public void OnInputDOBChange()
+    {
+        IsDOBError = "";
+    }
+
+    public void OnInputSexChange()
+    {
+        IsSexError = "";
+    }
+
+    private async Task<bool> ValidateData()
+    {
+        bool IsValid = true;
+
+        if (String.IsNullOrWhiteSpace(FETP))
+        {
+            IsFETPError = "border-color:red";
+        }
+        if (String.IsNullOrWhiteSpace(CohortNumber))
+        {
+            IsChrNumError = "border-color:red";
+        }
+        if (String.IsNullOrWhiteSpace(Convert.ToString(DOB)))
+        {
+            IsDOBError = "border-color:red";
+        }
+        if (String.IsNullOrWhiteSpace(Sex))
+        {
+            IsSexError = "border-color:red";
+        }
+        if ((String.IsNullOrWhiteSpace(FETP)) || (String.IsNullOrWhiteSpace(CohortNumber)) || (String.IsNullOrWhiteSpace(Convert.ToString(DOB))) || (String.IsNullOrWhiteSpace(Sex)))
+        {
+            IsValid = false;
+            await Application.Current.MainPage.DisplayAlert("Missing Required Fields", "Please provide the missing required fields..", "Ok");
+        }
+        StateHasChanged();
+        return IsValid;
+    }
+
+    private async void OnSaveData()
     {
         SaveData();
-        NavigationManager.NavigateTo("/add_project_step_2");
+        await Application.Current.MainPage.DisplayAlert("Alert!", "Data Saved..", "OK");
+    }
+
+    private async void GoNextPage()
+    {
+        if (await ValidateData())
+        {
+            SaveData();
+            NavigationManager.NavigateTo("/add_project_step_2");
+        }
+    }
+
+    private void GoPrevPage()
+    {
+        SaveData();
+        NavigationManager.NavigateTo("/Home");
+    }
+
+    private void GoToStepOne()
+    {
+        SaveData();
+        NavigationManager.NavigateTo("/add_project_step_1");
+    }
+
+    private async void GoToStepThree()
+    {
+        if (await ValidateData())
+        {
+            SaveData();
+            NavigationManager.NavigateTo("/add_project_step_3");
+        }
     }
 
     private void SaveData()

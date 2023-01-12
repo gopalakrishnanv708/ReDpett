@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
+using Microsoft.Extensions.DependencyInjection;
 using ReDpett.Data;
 using ReDpett.Service;
 
@@ -22,7 +23,8 @@ public static class MauiProgram
 #endif
         builder.Services.AddSingleton<AppDataService>();
         builder.Services.AddSingleton<WeatherForecastService>();
+        builder.Services.AddScoped<ISaveDataService, StoreDataService>();
 
-		return builder.Build();
+        return builder.Build();
 	}
 }

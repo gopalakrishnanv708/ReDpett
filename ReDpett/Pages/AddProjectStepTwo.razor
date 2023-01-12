@@ -7,7 +7,7 @@
 
 <div class="inner-page-wrapper">
     <div class="header-wrap">
-        <div class="back-top-page">
+        <div class="back-top-page" @onclick=GoBackPage>
             <span class="back-btn">
                 <img src="images/black-arrow.svg" alt="img" />
             </span>
@@ -24,19 +24,19 @@
             Throughout your training, add new Projects (or update entries) as needed.
         </div>
         <div class="page-stepper-wrap">
-            <div class="stepper-sepeat active-step">
+            <div class="stepper-sepeat active-step" @onclick=GoBackPage>
                 <div class="stepper-count-wrap">
                     <span>1</span>
                 </div>
                 <p>Resident </p>
             </div>
-            <div class="stepper-sepeat active-step">
+            <div class="stepper-sepeat active-step" @onclick=GoToStepTwo>
                 <div class="stepper-count-wrap">
                     <span>2</span>
                 </div>
                 <p>Job & Site</p>
             </div>
-            <div class="stepper-sepeat">
+            <div class="stepper-sepeat" @onclick=GoNextPage>
                 <div class="stepper-count-wrap">
                     <span>3</span>
                 </div>
@@ -48,7 +48,18 @@
                 <div class="form-group">
                     <label>Professional Background</label>
                     <select class="form-control " @bind=Professional_Background>
-                        <option>Select</option>
+                        <option value="">Select</option>
+                        <option value="1-Human Heath (Physician)">1-Human Heath (Physician)</option>
+                        <option value="2-Human Health (Nurse)">2-Human Health (Nurse)</option>
+                        <option value="3-Human Health (Laboratorian)">3-Human Health (Laboratorian)</option>
+                        <option value="4-Human Health (Public Health Professional)">4-Human Health (Public Health Professional)</option>
+                        <option value="5-Human Health (Other)">5-Human Health (Other)</option>
+                        <option value="6-Animal Health (Veterinarian)">6-Animal Health (Veterinarian)</option>
+                        <option value="7-Animal Health (Techician)">7-Animal Health (Techician)</option>
+                        <option value="8-Animal Health (Laboratorian)">8-Animal Health (Laboratorian)</option>
+                        <option value="9-Animal Health (Other)">9-Animal Health (Other)</option>
+                        <option value="10-Environmental Health">10-Environmental Health</option>
+                        <option value="11-Other">11-Other</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -86,7 +97,9 @@
                 <div class="form-group">
                     <label>Country</label>
                     <select class="form-control " @bind=Country>
-                        <option>Select</option>
+                        <option value="">Select</option>
+                        <option value="India">India</option>
+                        <option value="USA">USA</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -112,49 +125,52 @@
                 <div class="custom-radio-wrap">
                     <p class="radio-label">Facility Level</p>
                     <label for="radio-1" class="radio-btn-wrap">
-                        <input type="radio" id="radio-1" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "1")>
+                        <input type="radio" id="radio-1" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "National/Central")>
                         <span class="checkmark"></span>
                         <p class="radio-btn-label">
                             National/Central
                         </p>
                     </label>
                     <label for="radio-2" class="radio-btn-wrap">
-                        <input type="radio" id="radio-2" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "1")>
+                        <input type="radio" id="radio-2" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "Regional")>
                         <span class="checkmark"></span>
                         <p class="radio-btn-label">
                             Regional
                         </p>
                     </label>
                     <label for="radio-3" class="radio-btn-wrap">
-                        <input type="radio" id="radio-3" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "1")>
+                        <input type="radio" id="radio-3" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "District")>
                         <span class="checkmark"></span>
                         <p class="radio-btn-label">
                             District
                         </p>
                     </label>
                     <label for="radio-4" class="radio-btn-wrap">
-                        <input type="radio" id="radio-4" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "1")>
+                        <input type="radio" id="radio-4" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "Health Facility")>
                         <span class="checkmark"></span>
                         <p class="radio-btn-label">
                             Health Facility
                         </p>
                     </label>
                     <label for="radio-5" class="radio-btn-wrap">
-                        <input type="radio" id="radio-5" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "1")>
+                        <input type="radio" id="radio-5" class="hidden radio-btn-input" value="1" name="radio" @onclick=@(() => FacilityLevel = "")>
                         <span class="checkmark"></span>
                         <p class="radio-btn-label">
                             Other
                         </p>
                     </label>
                 </div>
-                <div class="form-group">
-                    <label>CODE: Enable if Other is Facility Level</label>
-                    <input type="text" placeholder="" value="Other Facility" readonly class="form-control " />
-                </div>
+                @if (FacilityLevel == "")
+                {
+                    <div class="form-group">
+                        <label>CODE: Enable if Other is Facility Level</label>
+                        <input type="text" class="form-control " @bind=FacilityLevel />
+                    </div>
+                }
             </div>
             <div class="form-button-wrap">
                 <button class="button primary-btn-sky-blue" @onclick=GoBackPage>Back</button>
-                <button class="button primary-btn" @onclick=SaveData>Save</button>
+                <button class="button primary-btn" @onclick=OnSaveData>Save</button>
                 <button class="button" @onclick=GoNextPage>Next</button>
             </div>
         </div>
@@ -181,6 +197,26 @@
     public string FacilityName { get; set; }
     public string FacilityLevel { get; set; }
 
+    protected override void OnInitialized()
+    {
+        Professional_Background = data.Professional_Background;
+        Employer = data.Employer;
+        JobTitle = data.JobTitle;
+        YearsOnJob = data.YearsOnJob;
+        SupervisorName = data.SupervisorName;
+        SiteAddress = data.SiteAddress;
+        City = data.City;
+        State_Region_Pro = data.State_Region_Pro;
+        Postal_Zip = data.Postal_Zip;
+        Country = data.Country;
+        RPFL19_Longitude = data.RPFL19_Longitude;
+        RPFL20_Latitude = data.RPFL20_Latitude;
+        Secondary_Subnational_Unit = data.Secondary_Subnational_Unit;
+        Tertiary_Subnational_Unit = data.Tertiary_Subnational_Unit;
+        FacilityName = data.FacilityName;
+        FacilityLevel = data.FacilityLevel;
+    }
+
     private void GoNextPage()
     {
         SaveData();
@@ -191,6 +227,18 @@
     {
         SaveData();
         NavigationManager.NavigateTo("/add_project_step_1");
+    }
+
+    private void GoToStepTwo()
+    {
+        SaveData();
+        NavigationManager.NavigateTo("/add_project_step_2");
+    }
+
+    private async void OnSaveData()
+    {
+        SaveData();
+        await Application.Current.MainPage.DisplayAlert("Alert!", "Data Saved..", "OK");
     }
 
     private void SaveData()
