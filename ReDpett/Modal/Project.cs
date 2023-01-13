@@ -1,13 +1,14 @@
-﻿using ReDpett.Modal;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReDpett.Service
+namespace ReDpett.Modal
 {
-    public class AppDataService
+    [Table("user")]
+    public class Project
     {
         public string FETP { get; set; }
         public string CohortNumber { get; set; }
@@ -38,7 +39,5 @@ namespace ReDpett.Service
         public string Tertiary_Subnational_Unit { get; set; }
         public string FacilityName { get; set; }
         public string FacilityLevel { get; set; }
-       // public List<FileData> File_Att_Info { get; set; }
-
     }
 }

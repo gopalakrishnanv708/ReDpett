@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ReDpett.Service
 {
-    public interface ISaveDataService
+    public interface IDBService
     {
-        void CreateOfflineDB(AppDataService appData);
+        void InsertTransaction();
     }
 }
