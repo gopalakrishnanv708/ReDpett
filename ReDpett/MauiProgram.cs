@@ -27,19 +27,19 @@ public static class MauiProgram
         builder.Services.AddScoped<ISaveDataService, StoreDataService>();
         builder.Services.AddScoped<IDBService, DBService>();
 
-        string applicationFolderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "TestApp");
-        if (!Directory.Exists(applicationFolderPath))
-        {
-            Directory.CreateDirectory(applicationFolderPath);
-        }
-        string databaseFileName = Path.Combine(applicationFolderPath, "TestApp.db");
+        //string applicationFolderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "TestApp");
+        //if (!Directory.Exists(applicationFolderPath))
+        //{
+        //    Directory.CreateDirectory(applicationFolderPath);
+        //}
+        //string databaseFileName = Path.Combine(applicationFolderPath, "TestApp.db");
 
-        if (!File.Exists(databaseFileName))
-        {
-            var db = new SQLiteConnection(databaseFileName);
-            db.CreateTable<AppDataService>();
+        //if (!File.Exists(databaseFileName))
+        //{
+        //    var db = new SQLiteConnection(databaseFileName);
+        //    db.CreateTable<AppDataService>();
 
-        }
+        //}
 
         return builder.Build();
     }

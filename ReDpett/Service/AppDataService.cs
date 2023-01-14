@@ -38,7 +38,7 @@ namespace ReDpett.Service
         public string Tertiary_Subnational_Unit { get; set; }
         public string FacilityName { get; set; }
         public string FacilityLevel { get; set; }
-       // public List<FileData> File_Att_Info { get; set; }
+        public List<FileData> File_Att_Info { get; set; }
 
     }
 }

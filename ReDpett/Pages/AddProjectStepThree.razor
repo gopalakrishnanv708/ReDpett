@@ -151,7 +151,9 @@
         </div>
         <Footer />
     </div>
-}else{
+}
+else
+{
     <p>Loading.. Please wait..</p>
 }
 
@@ -172,9 +174,10 @@
     protected override void OnInitialized()
     {
         File_Att_Info = new List<FileData>();
-        //if(data.File_Att_Info != null){
-        //    File_Att_Info = data.File_Att_Info;
-        //}
+        if (data.File_Att_Info != null)
+        {
+            File_Att_Info = data.File_Att_Info;
+        }
     }
 
     public async void OnInputFileChange(InputFileChangeEventArgs e)
@@ -213,7 +216,7 @@
                     Att_FileName = browserFileName,
                     Report_Title = ReportTitle,
                     TypeOfReport = TypeOfReport,
-                    File_Att =  browserFileBase64,
+                    File_Att = browserFileBase64,
                     ContentType = browserFile.ContentType,
                     FileSize = Convert.ToString(browserFile.Size)
                 };
@@ -251,72 +254,84 @@
 
     private async void GoNextPage()
     {
-        IsLoading = true;
-        await Task.Delay(50);
-        StateHasChanged();
+        SaveData();
 
-
-        try{
-            _OfflineDataService.CreateOfflineDB(data);
-            _dbService.InsertTransaction();
-            data.FETP = null;
-            data.CohortNumber = null;
-            data.CohortEndDate = null;
-            data.CohortStartDate = null;
-            data.ResidentName = null;
-            data.Given_FirstName = null;
-            data.MiddleName = null;
-            data.Sur_LastName = null;
-            data.DOB = null;
-            data.Age = 0;
-            data.Sex = null;
-            data.Email = null;
-            data.Phone = null;
-            data.Professional_Background = null;
-            data.Employer = null;
-            data.JobTitle = null;
-            data.YearsOnJob = 0;
-            data.SupervisorName = null;
-            data.SiteAddress = null;
-            data.City = null;
-            data.State_Region_Pro = null;
-            data.Postal_Zip = null;
-            data.Country = null;
-            data.RPFL19_Longitude = 0;
-            data.RPFL20_Latitude = null;
-            data.Secondary_Subnational_Unit = null;
-            data.Tertiary_Subnational_Unit = null;
-            data.FacilityName = null;
-            data.FacilityLevel = null;
-           // data.File_Att_Info = null;
-            IsLoading = false;
+        if (data.File_Att_Info.Count > 0)
+        {
+            IsLoading = true;
             await Task.Delay(50);
             StateHasChanged();
-            await Application.Current.MainPage.DisplayAlert("Alert!", "Data Submitted succesfully..", "OK");
-            
-            NavigationManager.NavigateTo("/");
+            try
+            {
+                //_OfflineDataService.CreateOfflineDB(data);
+                _dbService.InsertTransaction();
+                data.FETP = null;
+                data.CohortNumber = null;
+                data.CohortEndDate = null;
+                data.CohortStartDate = null;
+                data.ResidentName = null;
+                data.Given_FirstName = null;
+                data.MiddleName = null;
+                data.Sur_LastName = null;
+                data.DOB = null;
+                data.Age = 0;
+                data.Sex = null;
+                data.Email = null;
+                data.Phone = null;
+                data.Professional_Background = null;
+                data.Employer = null;
+                data.JobTitle = null;
+                data.YearsOnJob = 0;
+                data.SupervisorName = null;
+                data.SiteAddress = null;
+                data.City = null;
+                data.State_Region_Pro = null;
+                data.Postal_Zip = null;
+                data.Country = null;
+                data.RPFL19_Longitude = 0;
+                data.RPFL20_Latitude = null;
+                data.Secondary_Subnational_Unit = null;
+                data.Tertiary_Subnational_Unit = null;
+                data.FacilityName = null;
+                data.FacilityLevel = null;
+                data.File_Att_Info = null;
+                IsLoading = false;
+                await Task.Delay(50);
+                StateHasChanged();
+                await Application.Current.MainPage.DisplayAlert("Alert!", "Data Submitted succesfully..", "OK");
+
+                NavigationManager.NavigateTo("/");
+            }
+            catch (Exception)
+            {
+                IsLoading = false;
+                await Task.Delay(50);
+                StateHasChanged();
+                await Application.Current.MainPage.DisplayAlert("Alert!", "Data was not submitted. Error Occured..", "OK");
+            }
         }
-        catch(Exception){
-            IsLoading = false;
-            await Task.Delay(50);
-            StateHasChanged();
-            await Application.Current.MainPage.DisplayAlert("Alert!", "Data was not submitted. Error Occured..", "OK");
+        else
+        {
+            await Application.Current.MainPage.DisplayAlert("File Required!", "Please add a entry to proceed..", "OK");
         }
 
     }
 
     private void GoBackPage()
     {
+        SaveData();
         NavigationManager.NavigateTo("/add_project_step_2");
     }
 
     private void GoToStepOne()
     {
+        SaveData();
         NavigationManager.NavigateTo("/add_project_step_1");
     }
 
     private void GoToStepThree()
     {
+        SaveData();
         NavigationManager.NavigateTo("/add_project_step_3");
     }
 
@@ -328,6 +343,6 @@
 
     private void SaveData()
     {
-        //data.File_Att_Info = File_Att_Info;
+        data.File_Att_Info = File_Att_Info;
     }
 }

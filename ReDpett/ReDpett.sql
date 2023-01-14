@@ -1,7 +1,8 @@
+--sp
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[SpInsertProjectAndAttachmentRecord]
+CREATE PROCEDURE [dbo].[SpInsertProjectRecord]
   @GlobalRecordId nvarchar(255),
   @RALevel bit,
   @FETPFrontline nvarchar(255),
@@ -95,4 +96,60 @@ INSERT INTO [dbo].[Frontline36](
   @RPFL23b_Other)
 END
 GO
-	  
+--table
+USE [TrackingMasterOLD]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProjectAttachment](
+	[record_id] [nvarchar](255) PRIMARY KEY,
+	[project_id] [nvarchar](255) NOT NULL,
+	[file] varchar(max) NOT NULL,
+	[FileName] [nvarchar](255) NULL,
+	[fileContentType] [nvarchar](255)NULL,
+	[fileSize] [nvarchar](255) NULL,
+	[reportTitle] [nvarchar](225) NULL,
+	[reportCategory] [nvarchar](255) NULL,
+	CONSTRAINT FK_projectId FOREIGN KEY (project_id)
+    REFERENCES Frontline36(GlobalRecordId)
+) ON [PRIMARY]
+GO
+--sp
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SpInsertAttachmentRecord]
+  @record_id nvarchar(255),
+  @project_id nvarchar(255),
+  @file varchar(max),
+  @FileName nvarchar(255),
+  @fileContentType nvarchar(255),
+  @fileSize nvarchar(255),
+  @reportTitle nvarchar(255),
+  @reportCategory nvarchar(255)
+  AS
+BEGIN
+INSERT INTO [dbo].[ProjectAttachment](
+       [record_id]
+      ,[project_id]
+      ,[file]
+      ,[FileName]
+      ,[fileContentType]
+      ,[fileSize]
+      ,[reportTitle]
+      ,[reportCategory]
+      )
+	  VALUES (
+   @record_id,
+  @project_id,
+  @file,
+  @FileName,
+  @fileContentType,
+  @fileSize,
+  @reportTitle,
+  @reportCategory
+ )
+END
+GO
