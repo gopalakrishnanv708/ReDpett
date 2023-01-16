@@ -104,7 +104,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectAttachment](
-	[record_id] [nvarchar](255) PRIMARY KEY,
 	[project_id] [nvarchar](255) NOT NULL,
 	[file] varchar(max) NOT NULL,
 	[FileName] [nvarchar](255) NULL,
@@ -132,8 +131,7 @@ CREATE PROCEDURE [dbo].[SpInsertAttachmentRecord]
   AS
 BEGIN
 INSERT INTO [dbo].[ProjectAttachment](
-       [record_id]
-      ,[project_id]
+      [project_id]
       ,[file]
       ,[FileName]
       ,[fileContentType]
@@ -142,7 +140,6 @@ INSERT INTO [dbo].[ProjectAttachment](
       ,[reportCategory]
       )
 	  VALUES (
-   @record_id,
   @project_id,
   @file,
   @FileName,

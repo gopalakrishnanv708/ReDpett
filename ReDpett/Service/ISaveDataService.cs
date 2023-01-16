@@ -8,6 +8,7 @@ namespace ReDpett.Service
 {
     public interface ISaveDataService
     {
-        void CreateOfflineDB(AppDataService appData);
+        string InsertOfflineDB();
+        void CreateOfflineDB();
     }
 }

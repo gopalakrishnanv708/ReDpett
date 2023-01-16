@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.WebView.Maui;
-using Microsoft.Extensions.DependencyInjection;
-using ReDpett.Data;
+﻿using ReDpett.Data;
+using ReDpett.Modal;
 using ReDpett.Service;
 using SQLite;
 
@@ -17,7 +16,12 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             });
+        builder.Services.AddScoped(client =>
+   new HttpClient
+   {
+       Timeout = TimeSpan.FromSeconds(15),
 
+   });
         builder.Services.AddMauiBlazorWebView();
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
@@ -25,8 +29,11 @@ public static class MauiProgram
         builder.Services.AddSingleton<AppDataService>();
         builder.Services.AddSingleton<WeatherForecastService>();
         builder.Services.AddScoped<ISaveDataService, StoreDataService>();
-        builder.Services.AddScoped<IDBService, DBService>();
 
+        // Get an absolute path to the database file
+        
+
+        
         //string applicationFolderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "TestApp");
         //if (!Directory.Exists(applicationFolderPath))
         //{
@@ -34,10 +41,13 @@ public static class MauiProgram
         //}
         //string databaseFileName = Path.Combine(applicationFolderPath, "TestApp.db");
 
-        //if (!File.Exists(databaseFileName))
+        //if (!File.Exists(databasePath))
         //{
-        //    var db = new SQLiteConnection(databaseFileName);
-        //    db.CreateTable<AppDataService>();
+        //    var db = new SQLiteAsyncConnection(databasePath);
+
+        //     db.creat
+        //    //var db = new SQLiteConnection(databaseFileName);
+        //    //db.CreateTable<Project>();
 
         //}
 
