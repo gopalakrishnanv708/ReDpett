@@ -32,7 +32,7 @@ namespace ReDpett.Service
         public string State_Region_Pro { get; set; }
         public string Postal_Zip { get; set; }
         public string Country { get; set; }
-        public int RPFL19_Longitude { get; set; }
+        public string RPFL19_Longitude { get; set; }
         public string RPFL20_Latitude { get; set; }
         public string Secondary_Subnational_Unit { get; set; }
         public string Tertiary_Subnational_Unit { get; set; }
