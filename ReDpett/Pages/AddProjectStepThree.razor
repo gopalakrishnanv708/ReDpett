@@ -306,7 +306,7 @@ else
                 //"application/json"));
                 string req_post_content = await req_tran_res.Content.ReadAsStringAsync();
                // _OfflineDataService.CreateOfflineDB();
-               // await Application.Current.MainPage.DisplayAlert("Alert!", "Data in Table" + _OfflineDataService.InsertOfflineDB(), "OK");
+                //await Application.Current.MainPage.DisplayAlert("Alert!", "Data in Table" + _OfflineDataService.InsertOfflineDB(), "OK");
                 if (req_tran_res.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     data.FETP = null;

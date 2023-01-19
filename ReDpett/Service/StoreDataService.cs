@@ -15,7 +15,7 @@ namespace ReDpett.Service
         private SQLiteConnection conn;
         //private static string applicationFolderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "TestApp");
         //string databaseFileName = Path.Combine(applicationFolderPath, "TestApp.db");
-        string databaseFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MyData.db");
+        string databaseFileName = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "MyData.db");
 
         public async void CreateOfflineDB()
         {
