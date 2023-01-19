@@ -30,8 +30,8 @@
 
     protected async override void OnInitialized()
     {
-       await CheckAndRequestLocationPermission();
-       await CheckAndRequestStoragePermission();
+      await CheckAndRequestLocationPermission();
+      await CheckAndRequestStoragePermission();
     }
     public async Task<PermissionStatus> CheckAndRequestLocationPermission()
     {

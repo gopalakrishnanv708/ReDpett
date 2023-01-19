@@ -91,7 +91,7 @@
                 </div>
                 <div class="form-group">
                     <label>Cohort Number *</label>
-                    <input class="form-control " type="text" placeholder="Cohort Number" @bind=CohortNumber style=@IsChrNumError @oninput=OnInputCohortNumberChange />
+                    <input class="form-control " type="number" placeholder="Cohort Number" @bind=CohortNumber style=@IsChrNumError @oninput=OnInputCohortNumberChange />
                 </div>
                 <div class="form-group">
                     <label>Cohort Start Date</label>
@@ -126,7 +126,7 @@
                 </div>
                 <div class="form-group">
                     <label>Date of Birth *</label>
-                    <input type="date" class="form-control date-cal" @bind=DOB style=@IsDOBError @oninput=OnInputDOBChange />
+                    <input type="date" class="form-control date-cal" @bind=DOB style=@IsDOBError @onchange=OnInputDOBChange @bind:event="oninput" />
                 </div>
                 <div class="form-group">
                     <label>Age</label>
@@ -263,6 +263,15 @@
     public void OnInputDOBChange()
     {
         IsDOBError = "";
+        if (DOB != null)
+        {
+            Age = DateTime.Now.Year - DOB.Value.Year;
+            if (DateTime.Now.Month < DOB.Value.Month || (DateTime.Now.Month == DOB.Value.Month && DateTime.Now.Day < DOB.Value.Day))
+            {
+                Age--;
+            }
+            // = Convert.ToInt32(DateTime.Now.ToString("yyyy")) - Convert.ToInt32(DOB.Value.ToString("yyyy"));
+        }
     }
 
     public void OnInputSexChange()
@@ -310,6 +319,12 @@
                 await Application.Current.MainPage.DisplayAlert("Alert!", "Cohort Start Date should be less than end date..", "OK");
             }
         }
+        else if (Age == 0 || Age < 0)
+        {
+            IsValid = false;
+            await Application.Current.MainPage.DisplayAlert("Alert!", "Please enter a valid Date of birth..", "OK");
+
+        }
 
         StateHasChanged();
         return IsValid;
@@ -355,13 +370,13 @@
     {
         data.FETP = FETP;
         data.CohortNumber = CohortNumber;
-        data.CohortEndDate = CohortEndDate == null ? null : CohortEndDate.Value.ToString("dd-MM-yyyy");
-        data.CohortStartDate = CohortStartDate == null ? null : CohortStartDate.Value.ToString("dd-MM-yyyy");
+        data.CohortEndDate = CohortEndDate == null ? null : CohortEndDate.Value.ToString("MM-dd-yyyy");
+        data.CohortStartDate = CohortStartDate == null ? null : CohortStartDate.Value.ToString("MM-dd-yyyy");
         data.ResidentName = ResidentName;
         data.Given_FirstName = Given_FirstName;
         data.MiddleName = MiddleName;
         data.Sur_LastName = Sur_LastName;
-        data.DOB = DOB == null ? null : DOB.Value.ToString("dd-MM-yyyy");
+        data.DOB = DOB == null ? null : DOB.Value.ToString("MM-dd-yyyy");
         data.Age = Age;
         data.Sex = Sex;
         data.Email = Email;
