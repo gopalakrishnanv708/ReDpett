@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,800&display=swap');
 
 body {
-    font-family: 'sharp_sansbook';
+    font-family: 'ABeeZee', sans-serif;
     margin: 0px;
     padding: 0px;
     overflow-x: hidden;
@@ -105,7 +106,7 @@ margin:0px;
 	box-shadow: -1px 9px 28px #d7d7d7;
 }
 .heading-2{
-	 font-family: 'sharp_sansextrabold';
+	 font-family: 'ABeeZee', sans-serif;
     font-size: 21px;
     line-height: 30px;
     text-align: center;
@@ -198,7 +199,7 @@ margin-bottom:40px;
     color: #434343;
 }
 .user-info-data h2{
-font-family: 'sharp_sansextrabold';
+font-family: 'ABeeZee', sans-serif;
     font-weight: 700;
     font-size: 16px;
     line-height: 13px;
@@ -402,7 +403,7 @@ border-color:#fff;
     line-height: 32px;
     color: #232323;
     margin: 0;
-	font-family: 'sharp_sansextrabold';
+	font-family: 'ABeeZee', sans-serif;
 }
 .back-btn {
     width: 33px;
@@ -436,7 +437,7 @@ margin:28px 0px 20px 0px;
     line-height: 21px;
     color: #000000;
     margin-bottom: 10px;
-    font-family: 'sharp_sansextrabold';
+    font-family: 'ABeeZee', sans-serif;
     letter-spacing: 0.2px;
 }
 .custom-radio-wrap {
@@ -490,6 +491,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .button {
     width: 100%;
+	font-family: 'ABeeZee', sans-serif;
     display: block;
     background: #C8C8C8;
     border-radius: 5px;
@@ -497,7 +499,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 60px;
     margin: 15px 0;
     box-shadow: none;
-    font-weight: 600;
     font-size: 18px;
     line-height: 24px;
     text-align: center;
@@ -596,8 +597,8 @@ fill:#2661A5;
     display: block;
 }
 .radio-btn-wrap .checkmark:after {
-    width: 7px;
-    height: 7px;
+    width:8px;
+    height:8px;
     border-radius: 50%;
     background: #3473BC;
 }
@@ -680,6 +681,7 @@ text-align: left;
 }
 .modal-mid-wrap {
     padding: 15px;
+	width:100%;
 }
 .add-entry-modal-inner-data {
   background: #FFFFFF;
@@ -879,3 +881,398 @@ line-height: 18px;
     z-index: 66;
 	text-decoration:none;
 }
+
+/***Sign up process css start here****/
+.auth-page-wrapper {
+    padding: 15px 20px;
+	font-family: 'ABeeZee', sans-serif;
+	background: #F8F6F5;
+	min-height:100vh;
+	position:relative;
+}
+.auth-page-wrapper:before {
+    position: absolute;
+    content: "";
+    background: url(../images/shadow-img1.png);
+    width: 118px;
+    height: 100%;
+    background-repeat: no-repeat;
+    left: 0;
+    top: 0;
+}
+
+.auth-page-wrapper:after {
+    position: absolute;
+    content: "";
+    background: url(../images/shadow-img.png);
+    width: 118px;
+    height: 100%;
+    background-repeat: no-repeat;
+    right: 0;
+    top: 0;
+}
+.auth-page-wrapper .add-project-adata-wrap {
+    padding-bottom: 50px;
+    min-height: calc(100vh - 320px);
+    padding-top: 10px;
+	position:relative;
+	z-index:2;
+}
+
+.auth-page-wrapper .page-heading-wrap h2{
+font-family: 'ABeeZee', sans-serif;
+font-weight: 400;
+font-size: 34px;
+line-height: 41px;
+letter-spacing: -0.3px;
+color: #000000;	
+}
+.auth-page-wrapper .all-form-wraper{
+ margin:30px 0px;	
+}
+
+.auth-page-wrapper .button{
+font-family: 'ABeeZee', sans-serif;
+text-transform:capitalize;
+font-weight:500;	
+}
+
+.auth-page-wrapper  .custom-select{
+  width: 100%;
+  position: relative;
+  margin: 20px 0;
+}
+
+.custom-select select {
+  display: none;
+}
+
+.selected-item {
+  cursor: pointer;
+  z-index: 99;
+  background-color: #FFFFFF;
+    border:1px solid #878B8F;
+    border-radius:5px;
+    height: 56px;
+    width: 100%;
+    padding: 4px 12px;
+    outline: none;
+    box-shadow: none;
+    box-sizing: border-box;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #282729;
+    display: flex;
+    align-items: center;
+	position:relative;
+}
+
+.selected-item:after {
+     background:url(../images/select-arrow.svg);
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 0;
+    transition: 0.5s;
+    content: "";
+    width: 39px;
+    height: 31px;
+}
+
+/*.arrowanim.selected-item:after {
+  transform: rotate(180deg);
+}*/
+
+.select-item-list {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 22px;
+    letter-spacing: -0.3px;
+    color: #000000;
+    padding: 10px 0;
+    border-bottom: 1px solid #f2f2f2;
+	font-family: 'Roboto', sans-serif;
+}
+.select-item-list:last-child{
+ border:0px;	
+}
+
+.all-items {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.all-items-hide {
+  display: none;
+}
+
+.sdf {
+  border: 1px solid red;
+}
+
+.already-have-account-text {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    letter-spacing: -0.3px;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 20px 0;
+}
+.already-have-account-text a{
+  color: rgba(0, 0, 0, 0.9);
+   text-decoration:underline;  
+}
+
+.auth-page-wrapper .primary-btn {
+    background: #2661A5;
+    color: #fff;
+    /*background: #20445B;
+    border-radius: 10px;*/
+}
+.create-account-with-social p {
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 26px;
+    text-align: center;
+    margin: 0;
+}
+.create-social-account-wrap {
+    border-top: 1px solid #D9D9D9;
+    padding: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin:16px -10px 0px;
+}
+.signup-social-icon {
+    padding: 10px;
+    background: unset;
+    border: 0;
+    border: 1px solid #7b7b7b;
+    height: 60px;
+    width: 47%;
+    border-radius: 10px;
+    box-shadow: none;
+    background: #fafafa;
+}
+.signup-social-icon img {
+    max-width: 100%;
+    height: 100%;
+}
+
+.forgot-password-link{
+text-decoration:none !important;	
+}
+
+.email-verification-page .page-heading-wrap p{
+font-weight: 400;
+font-size: 17px;
+line-height: 20px;
+letter-spacing: -0.3px;
+margin:8px 0px 0px;
+color: #000000;	
+}
+.email-verification-page .all-form-wraper{
+padding-top:50px;	
+}
+
+.email-verification-page .form-control, .email-verification-page .form-control:focus, .email-verification-page .form-control:active {
+    border-radius: 0px;
+    border-color: #D9D9D9;
+    background: #D9D9D9;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+.email-verification-page .selected-item{
+border-radius: 0px;
+border-color: #D9D9D9;
+background: #D9D9D9;
+font-weight: 500;
+letter-spacing: 0.5px;	
+}
+.dont-recive-email-wrap{
+    margin-top: 70px;
+}
+.dont-recive-email-wrap h3{
+font-weight: 400;
+font-size: 24px;
+line-height: 36px;
+margin:0px 0px 0px;
+letter-spacing: -0.3px;
+color: #000000;	
+}
+.resend-email, .resend-email:focus{
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 26px;
+    letter-spacing: -0.3px;
+    text-decoration-line: underline;
+    color: #000000;
+    padding: 0;
+    font-family: 'ABeeZee', sans-serif;
+    background: no-repeat;
+    border: 0;
+    outline: none;
+	box-shadow:none;
+}
+
+.dont-recive-email-wrap .already-have-account-text {
+    margin: 3px 0;
+}
+.sign-up-code-wrap {
+    text-align: center;
+    padding-top: 70px !important;
+}
+
+.sign-up-code-wrap .page-heading-wrap p {
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 20px;
+    letter-spacing: -0.3px;
+    margin: 8px 0px 0px;
+    color: #000000;
+}
+.sign-up-code-wrap .form-control, .sign-up-code-wrap .form-control:focus, .sign-up-code-wrap .form-control:active{
+ border-radius:10px;
+text-align:center; 
+}
+a.button.primary-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.big-logo{
+	width:180px;
+	margin:10px auto 25px;
+}
+.mp-data-repeat.sign-in-register-link{
+ margin-top:30px;	
+}
+
+.mp-data-repeat.sign-in-register-link div, .mp-data-repeat.sign-in-register-link div svg path{
+    color: #0D16FE;
+    fill: #0D16FE !important;
+}
+.signup-logo-wrap {
+    text-align: center;
+    padding: 40px 0 20px;
+}
+
+.register-link {
+    color: #2661A5 !important;
+    text-decoration: none !important;
+    margin: 0 auto;
+    display: table;
+}
+.register-passcode-label-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.register-passcode-label-wrap span {
+    display: flex; 
+}
+.register-sign-text{
+margin-top:40px;
+color:#000;	
+text-align: center;
+}
+.register-sign-text a{
+color:#2661A5;	
+}
+.register-passcode-wrap {
+    margin-top: 25px;
+}
+.thank-you-code-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 18px 0 0;
+}
+.thank-you-code-text span {
+    display: flex;
+    margin: 0px 5px;
+    color: #2661A5;
+    text-decoration: underline;
+}
+
+.close-btn {
+    background: #75B0F4 !important;
+    text-transform: uppercase !important;
+}
+
+.applied-code-text {
+    font-family: 'ABeeZee', sans-serif;
+    font-weight: 400;
+    font-size: 34px;
+    line-height: 41px;
+    letter-spacing: -0.3px;
+    color: #000000;
+    margin-top: 30px;
+}
+.blue-text{
+color:#75B0F4;	
+}
+.readonly-text{
+padding:15px;
+background: #C8C8C8;
+border-radius: 5px;	
+font-weight: 400;
+font-size: 20px;
+line-height: 24px;
+color: #232323;
+}
+.auth-page-wrapper .page-heading-wrap p{
+margin:10px 0px 0px;	
+}
+
+.custom-checkbox label .checkmark {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #BCBCBC;
+    border-radius: 5px;
+    background: #fff;
+}
+
+.custom-checkbox .radio-btn-wrap {
+    padding-left: 34px !important;
+    margin-bottom: 0px;
+    font-size: 16px;
+    line-height: 15px;
+    color: #000000;
+}
+.custom-radio-wrap.custom-checkbox{
+ margin-bottom:30px;	
+}
+.edit-project-wrap {
+    background: #C7C7C7;
+    border-radius: 0px 0px 4px 4px;
+    text-align: right;
+    padding: 5px 8px;
+    width: 100%;
+    position: relative;
+    left: -8px;
+    bottom: -8px;
+    display: inline-flex;
+    justify-content: end;
+    align-items: center;
+    cursor: pointer;
+}
+/***Sign up process css end here****/ 
