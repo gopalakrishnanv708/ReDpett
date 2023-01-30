@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+@inject NavigationManager NavigationManager;
+
 <div class="page-data-wrap">
     <div class="page-data-inner-wrap">
         <div class="page-logo-wrap">
@@ -30,8 +32,8 @@
 
     protected async override void OnInitialized()
     {
-      //await CheckAndRequestLocationPermission();
-      //await CheckAndRequestStoragePermission();
+        //await CheckAndRequestLocationPermission();
+        //await CheckAndRequestStoragePermission();
     }
     public async Task<PermissionStatus> CheckAndRequestLocationPermission()
     {
@@ -77,5 +79,13 @@
         //}
 
         return status_wite;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Task.Delay(500);
+        Thread.Sleep(4000);
+        NavigationManager.NavigateTo("/screen_2");
+
     }
 }

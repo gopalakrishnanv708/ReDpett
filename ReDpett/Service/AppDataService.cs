@@ -10,6 +10,7 @@ namespace ReDpett.Service
     public class AppDataService
     {
         public string FETP { get; set; }
+        
         public string CohortNumber { get; set; }
         public string CohortEndDate { get; set; }
         public string CohortStartDate { get; set; }
@@ -38,7 +39,14 @@ namespace ReDpett.Service
         public string Tertiary_Subnational_Unit { get; set; }
         public string FacilityName { get; set; }
         public string FacilityLevel { get; set; }
+        public string GUID { get; set; }
+        public int Status { get; set; } = 0;
         public List<FileData> File_Att_Info { get; set; }
 
+    }
+
+    public class ListAppDataService
+    {
+        public List<AppDataService> appDataServices { get; set; }
     }
 }

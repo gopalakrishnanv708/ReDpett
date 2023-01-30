@@ -27,29 +27,26 @@ public static class MauiProgram
         builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
         builder.Services.AddSingleton<AppDataService>();
+        builder.Services.AddSingleton<ListAppDataService>();
+
         builder.Services.AddSingleton<WeatherForecastService>();
         builder.Services.AddScoped<ISaveDataService, StoreDataService>();
 
         // Get an absolute path to the database file
-        
 
-        
-        //string applicationFolderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "TestApp");
-        //if (!Directory.Exists(applicationFolderPath))
-        //{
-        //    Directory.CreateDirectory(applicationFolderPath);
-        //}
-        //string databaseFileName = Path.Combine(applicationFolderPath, "TestApp.db");
+        string applicationFolderPath = Path.Combine(Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "TestApp");
 
-        //if (!File.Exists(databasePath))
-        //{
-        //    var db = new SQLiteAsyncConnection(databasePath);
+        if (!Directory.Exists(applicationFolderPath))
+        {
+            Directory.CreateDirectory(applicationFolderPath);
+        }
+        string databaseFileName = Path.Combine(applicationFolderPath, "Projects.json");
 
-        //     db.creat
-        //    //var db = new SQLiteConnection(databaseFileName);
-        //    //db.CreateTable<Project>();
+        if (!File.Exists(databaseFileName))
+        {
 
-        //}
+            File.WriteAllLines(databaseFileName, new string[] {" "});
+        }
 
         return builder.Build();
     }

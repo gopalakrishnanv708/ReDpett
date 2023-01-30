@@ -6,6 +6,8 @@
 
 @inject NavigationManager NavigationManager;
 @inject AppDataService data;
+@inject ListAppDataService _listData;
+@inject ISaveDataService _OfflineDataService;
 
 <div class="inner-page-wrapper">
     <div class="header-wrap">
@@ -368,6 +370,7 @@
 
     private async void SaveData()
     {
+        data.GUID = Guid.NewGuid().ToString();
         data.FETP = FETP;
         data.CohortNumber = CohortNumber;
         data.CohortEndDate = CohortEndDate == null ? null : CohortEndDate.Value.ToString("MM-dd-yyyy");

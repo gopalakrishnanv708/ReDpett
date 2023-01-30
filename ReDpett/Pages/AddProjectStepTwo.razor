@@ -4,6 +4,8 @@
 @using ReDpett.Service
 @inject NavigationManager NavigationManager;
 @inject AppDataService data;
+@inject ListAppDataService _listData;
+@inject ISaveDataService _OfflineDataService;
 
 <div class="inner-page-wrapper">
     <div class="header-wrap">
@@ -562,5 +564,7 @@
         data.Tertiary_Subnational_Unit = Tertiary_Subnational_Unit;
         data.FacilityName = FacilityName;
         data.FacilityLevel = FacilityLevel;
+
+        //_listData.appDataServices.Add(data);
     }
 }

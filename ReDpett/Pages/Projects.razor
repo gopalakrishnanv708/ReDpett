@@ -1,6 +1,11 @@
 ﻿@page "/Projects"
 
 @using ReDpett.Pages.Components
+@using Newtonsoft.Json
+@using ReDpett.Service
+
+@inject ISaveDataService _OfflineDataService;
+
 
 <div class="inner-page-wrapper">
     <div class="page-heading-wrap">
@@ -16,30 +21,29 @@
     </div>
     <div class="project-listing-wrap">
         <p class="projects-listing-subhead">Frontline Tier</p>
-       @* <div class="project-list-repeat">
-            <div class="project-list-data">
-                <h3>Project Name </h3>
-                <p class="project-created-by">Created by trainee name</p>
-                <p>2022-12-15</p>
-            </div>
-            <div class="project-list-action">
-                <span class="priject-list-action-btn"><img src="images/edit.svg" alt="img" /></span>
-                <span class="priject-list-action-btn"><img src="images/cloud.svg" alt="img" /></span>
-                <span class="priject-list-action-btn"><img src="images/close.svg" alt="img" /></span>
-            </div>
-        </div>
-        <div class="project-list-repeat">
-            <div class="project-list-data">
-                <h3>Project Name </h3>
-                <p class="project-created-by">Created by trainee name</p>
-                <p>2022-12-15</p>
-            </div>
-            <div class="project-list-action">
-                <span class="priject-list-action-btn"><img src="images/edit.svg" alt="img" /></span>
-                <span class="priject-list-action-btn"><img src="images/blue-cloud.svg" alt="img" /></span>
-                <span class="priject-list-action-btn"><img src="images/close.svg" alt="img" /></span>
-            </div>
-        </div>*@
+
+        @if (_listData.appDataServices != null)
+        {
+            @if (_listData.appDataServices.Count > 0)
+            {
+                @foreach (AppDataService d in _listData.appDataServices)
+                {
+                    <div class="project-list-repeat">
+                        <div class="project-list-data">
+                            <h3>@d.ResidentName</h3>
+                            <p class="project-created-by">@d.Given_FirstName</p>
+                            <p>@d.DOB</p>
+                        </div>
+                        <div class="project-list-action">
+                            <span class="priject-list-action-btn"><img src="images/edit.svg" alt="img" /></span>
+                            <span class="priject-list-action-btn"><img src="images/cloud.svg" alt="img" /></span>
+                            <span class="priject-list-action-btn"><img src="images/close.svg" alt="img" /></span>
+                        </div>
+                    </div>
+                }
+            }
+        }
+
     </div>
     <a href="javascript:void()" class="support-button"><img src="images/headset-help.svg" alt="img" /></a>
     <footer class="footer-wrap">
@@ -75,5 +79,19 @@
 </div>
 
 @code {
+    AppDataService service = null;
 
+    ListAppDataService _listData;
+
+    protected override async void OnInitialized()
+    {
+        try
+        {
+            _listData = await _OfflineDataService.GetDataFromOfflineDB();
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
 }

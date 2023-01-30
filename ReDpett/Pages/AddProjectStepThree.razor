@@ -8,6 +8,7 @@
 @using System.Text
 
 @inject AppDataService data;
+@inject ListAppDataService _listData;
 @inject NavigationManager NavigationManager;
 @inject ISaveDataService _OfflineDataService;
 @inject HttpClient Http;
@@ -295,7 +296,6 @@ else
             StateHasChanged();
             try
             {
-            
                 string req_json_string = JsonConvert.SerializeObject(data);
                 Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var req_tran_res = await Http.PostAsync("https://redpett-fl-webapp-v3.azurewebsites.net/Projects/Insert", new StringContent(req_json_string, Encoding.UTF8,
@@ -305,10 +305,13 @@ else
                 //var req_tran_res = await Http.PostAsync("https://localhost:7194/Projects/Insert", new StringContent(req_json_string, Encoding.UTF8,
                 //"application/json"));
                 string req_post_content = await req_tran_res.Content.ReadAsStringAsync();
-               // _OfflineDataService.CreateOfflineDB();
-                //await Application.Current.MainPage.DisplayAlert("Alert!", "Data in Table" + _OfflineDataService.InsertOfflineDB(), "OK");
-                if (req_tran_res.StatusCode == System.Net.HttpStatusCode.OK)
-                {
+                _listData = await _OfflineDataService.GetDataFromOfflineDB();
+                data.Status = 1;
+                _listData.appDataServices.Add(data);
+                _OfflineDataService.InsertOfflineDB();
+
+                //if (req_tran_res.StatusCode == System.Net.HttpStatusCode.OK)
+                //{
                     data.FETP = null;
                     data.CohortNumber = null;
                     data.CohortEndDate = null;
@@ -339,20 +342,22 @@ else
                     data.FacilityName = null;
                     data.FacilityLevel = null;
                     data.File_Att_Info = null;
+                    data.GUID = null;
+                    data.Status = 0;
                     IsLoading = false;
                     await Task.Delay(50);
                     StateHasChanged();
                     await Application.Current.MainPage.DisplayAlert("Alert!", "Data Submitted succesfully..", "OK");
 
                     NavigationManager.NavigateTo("/Home");
-                }
-                else
-                {
-                    IsLoading = false;
-                    await Task.Delay(50);
-                    StateHasChanged();
-                    await Application.Current.MainPage.DisplayAlert("Alert!", "Data was not submitted. Error Occured.." + req_post_content , "OK");
-                }
+                //}
+                //else
+                //{
+                //    IsLoading = false;
+                //    await Task.Delay(50);
+                //    StateHasChanged();
+                //    await Application.Current.MainPage.DisplayAlert("Alert!", "Data was not submitted. Error Occured.." + req_post_content , "OK");
+                //}
 
 
             }

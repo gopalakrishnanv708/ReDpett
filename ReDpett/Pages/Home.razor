@@ -1,6 +1,10 @@
 ﻿@page "/Home"
 
 @using ReDpett.Pages.Components
+@using ReDpett.Service
+
+@inject ISaveDataService _OfflineDataService;
+@inject ListAppDataService _listData;
 
 <div class="inner-page-wrapper">
     <div class="header-wrap">
@@ -62,7 +66,7 @@
                 </span>
             </div>
         </a>
-        <a href="javascript:void();" class="mp-data-repeat">
+        @*<a href="javascript:void();" class="mp-data-repeat">
             <div class="mp-data-name">
                 Sign In / Sign Up
             </div>
@@ -73,7 +77,7 @@
                     </svg>
                 </span>
             </div>
-        </a>
+        </a>*@
     </div>
     <footer class="footer-wrap">
         <div class="footer-inner">
@@ -109,5 +113,15 @@
 
 @code {
 
-   
+    protected override async void OnInitialized()
+    {
+        try
+        {
+            _listData = await _OfflineDataService.GetDataFromOfflineDB();
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
 }

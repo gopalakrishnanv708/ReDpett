@@ -1,46 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using ReDpett.Modal;
-using SQLite;
-
+﻿using Newtonsoft.Json;
 
 namespace ReDpett.Service
 {
     public class StoreDataService : ISaveDataService
     {
-        private SQLiteConnection conn;
-        //private static string applicationFolderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "TestApp");
-        //string databaseFileName = Path.Combine(applicationFolderPath, "TestApp.db");
-        string databaseFileName = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "MyData.db");
+        string applicationFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "TestApp");
+        
+        private ListAppDataService _data;
 
-        public async void CreateOfflineDB()
+        public StoreDataService(ListAppDataService data)
         {
-            var db = new SQLiteAsyncConnection(databaseFileName);
-
-            await db.CreateTableAsync<Project>();
-
+            _data = data;
         }
 
-        public string InsertOfflineDB()
+        public async Task<ListAppDataService> GetDataFromOfflineDB()
         {
-            var db = new SQLiteConnection(databaseFileName);
-
-            if( db.GetTableInfo("Project").Count > 0)
+            try
             {
-                return db.GetTableInfo("Project").FirstOrDefault().Name;
+                if (!Directory.Exists(applicationFolderPath))
+                {
+                    Directory.CreateDirectory(applicationFolderPath);
+                }
+                string databaseFileName = Path.Combine(applicationFolderPath, "Projects.json");
+
+                var str = File.ReadAllText(databaseFileName);
+                if (!String.IsNullOrEmpty(str))
+                {
+                    var listAppDataService = JsonConvert.DeserializeObject<ListAppDataService>(str);
+                    _data = listAppDataService;
+                }
+                
             }
-            else
+            catch (Exception ex)
             {
-                return null;
+                await Application.Current.MainPage.DisplayAlert("Alert!", "Data was retrived from local db. Error Occured.." + ex.Message, "OK");
             }
+            return _data;
+        }
 
-            //db.Insert(appData);
-            //List<AppDataService> users = db.Table<AppDataService>().ToList();
+        public async void InsertOfflineDB()
+        {
+            try
+            {
+                if (!Directory.Exists(applicationFolderPath))
+                {
+                    Directory.CreateDirectory(applicationFolderPath);
+                }
+                string databaseFileName = Path.Combine(applicationFolderPath, "Projects.json");
 
+                
+
+                string req_json_string = JsonConvert.SerializeObject(_data);
+                File.WriteAllText(databaseFileName, req_json_string);
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert!", "Data was not saved in local db. Error Occured.." + ex.Message, "OK");
+            }
         }
 
     }

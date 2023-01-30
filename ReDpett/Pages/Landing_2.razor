@@ -1,5 +1,7 @@
 ﻿@page "/screen_2"
 
+@inject NavigationManager NavigationManager;
+
 <div class="page-data-wrap">
     <div class="page2-data-inner-wrap">
         <div class="page2-top-area">
@@ -35,4 +37,11 @@
 
 @code {
 
+    protected override async Task OnParametersSetAsync()
+    {
+        //await Task.Delay(500);
+        //Thread.Sleep(4000);
+        //NavigationManager.NavigateTo("/Home");
+
+    }
 }

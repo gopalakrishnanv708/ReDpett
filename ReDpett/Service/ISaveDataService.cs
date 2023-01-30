@@ -8,7 +8,7 @@ namespace ReDpett.Service
 {
     public interface ISaveDataService
     {
-        string InsertOfflineDB();
-        void CreateOfflineDB();
+        void InsertOfflineDB();
+        Task<ListAppDataService> GetDataFromOfflineDB();
     }
 }
