@@ -4,7 +4,7 @@ namespace ReDpett.Service
 {
     public class StoreDataService : ISaveDataService
     {
-        string applicationFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "TestApp");
+        string applicationFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "ReDpettApp");
         
         private ListAppDataService _data;
 
@@ -21,7 +21,7 @@ namespace ReDpett.Service
                 {
                     Directory.CreateDirectory(applicationFolderPath);
                 }
-                string databaseFileName = Path.Combine(applicationFolderPath, "Projects.json");
+                string databaseFileName = Path.Combine(applicationFolderPath, "Project.json");
 
                 var str = File.ReadAllText(databaseFileName);
                 if (!String.IsNullOrEmpty(str))
@@ -46,7 +46,7 @@ namespace ReDpett.Service
                 {
                     Directory.CreateDirectory(applicationFolderPath);
                 }
-                string databaseFileName = Path.Combine(applicationFolderPath, "Projects.json");
+                string databaseFileName = Path.Combine(applicationFolderPath, "Project.json");
 
                 string req_json_string = JsonConvert.SerializeObject(__data);
                 File.WriteAllText(databaseFileName, req_json_string);

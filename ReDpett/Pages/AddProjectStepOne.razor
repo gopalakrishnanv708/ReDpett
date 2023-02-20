@@ -224,47 +224,81 @@
 
     protected async override void OnInitialized()
     {
-        _listData = await _OfflineDataService.GetDataFromOfflineDB();
-        if(_listData != null)
+        try
         {
-            var _data = _listData.appDataServices.Find(x => x.GUID == E_GUID);
-            if (_data != null)
+            _listData = await _OfflineDataService.GetDataFromOfflineDB();
+            if (_listData != null)
             {
-                data = _data;
+                if (_listData.appDataServices != null)
+                {
+                    var _data = _listData.appDataServices.Find(x => x.GUID == E_GUID);
+                    if (_data != null)
+                    {
+                        data = _data;
+                    }
+                }
+                else
+                {
+                    _listData.appDataServices = new List<AppDataService>();
+                }
+            }
+            else
+            {
+                _listData = new ListAppDataService();
+                _listData.appDataServices = new List<AppDataService>();
+            }
+
+            FETP = data.FETP;
+            CohortNumber = data.CohortNumber;
+
+            if (data.CohortEndDate != null)
+            {
+                CohortEndDate = Convert.ToDateTime(data.CohortEndDate);
+            }
+            if (data.CohortStartDate != null)
+            {
+                CohortStartDate = Convert.ToDateTime(data.CohortStartDate);
+            }
+
+            ResidentName = data.ResidentName;
+            Given_FirstName = data.Given_FirstName;
+            MiddleName = data.MiddleName;
+            Sur_LastName = data.Sur_LastName;
+            if (data.DOB != null)
+            {
+                DOB = Convert.ToDateTime(data.DOB);
+            }
+            Age = data.Age;
+            Sex = data.Sex;
+            Email = data.Email;
+            Phone = data.Phone;
+            if (CohortEndDate != null)
+            {
+                if (CohortEndDate.Value.Year < 1700)
+                {
+                    CohortEndDate = null;
+                }
+            }
+            if (CohortStartDate != null)
+            {
+                if (CohortStartDate.Value.Year < 1700)
+                {
+                    CohortStartDate = null;
+                }
+            }
+            if (DOB != null)
+            {
+                if (DOB.Value.Year < 1700)
+                {
+                    DOB = null;
+                }
             }
         }
-        else
+        catch (Exception ex)
         {
-            _listData = new ListAppDataService();
-            _listData.appDataServices = new List<AppDataService>();
+            await Application.Current.MainPage.DisplayAlert("Alert!", ex.ToString(), "OK");
         }
 
-        FETP = data.FETP;
-        CohortNumber = data.CohortNumber;
-        CohortEndDate = Convert.ToDateTime(data.CohortEndDate);
-        CohortStartDate = Convert.ToDateTime(data.CohortStartDate);
-        ResidentName = data.ResidentName;
-        Given_FirstName = data.Given_FirstName;
-        MiddleName = data.MiddleName;
-        Sur_LastName = data.Sur_LastName;
-        DOB = Convert.ToDateTime(data.DOB);
-        Age = data.Age;
-        Sex = data.Sex;
-        Email = data.Email;
-        Phone = data.Phone;
-
-        if (CohortEndDate.Value.Year < 1700)
-        {
-            CohortEndDate = null;
-        }
-        if (CohortStartDate.Value.Year < 1700)
-        {
-            CohortStartDate = null;
-        }
-        if (DOB.Value.Year < 1700)
-        {
-            DOB = null;
-        }
     }
 
 
@@ -440,7 +474,7 @@
                 }
             }
         }
-        
+
         return IsValid;
     }
 }

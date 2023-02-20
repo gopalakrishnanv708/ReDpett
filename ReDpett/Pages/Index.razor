@@ -32,8 +32,12 @@
 
     protected async override void OnInitialized()
     {
-        //await CheckAndRequestLocationPermission();
-        //await CheckAndRequestStoragePermission();
+        if ((DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.Android))
+        {
+            await CheckAndRequestLocationPermission();
+            await CheckAndRequestStoragePermission();
+        }
+
     }
     public async Task<PermissionStatus> CheckAndRequestLocationPermission()
     {

@@ -12,10 +12,10 @@
             <h3>Resident - Driven Project Tool App For Frontline tier</h3>
             <p class="sub-info-text">An application collaboratively  developed by the US CDC’s Centre for Global Health’s Division Health Production and EPi Info<sub>TM</sub></p>
             <div class="bands-logos-wrap">
-                <a href="/Home" class="brand-logo-wrap">
+                <a class="brand-logo-wrap">
                     <img src="images/logo-1.png" alt="img" />
                 </a>
-                <a href="/Home" class="brand-logo-wrap">
+                <a class="brand-logo-wrap">
                     <img src="images/logo-2.png" alt="img" />
                 </a>
             </div>
@@ -39,9 +39,9 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        //await Task.Delay(500);
-        //Thread.Sleep(4000);
-        //NavigationManager.NavigateTo("/Home");
+        await Task.Delay(500);
+        Thread.Sleep(4000);
+        NavigationManager.NavigateTo("/Home");
 
     }
 }

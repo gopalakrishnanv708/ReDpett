@@ -35,13 +35,13 @@ public static class MauiProgram
 
         // Get an absolute path to the database file
 
-        string applicationFolderPath = Path.Combine(Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "TestApp");
+        string applicationFolderPath = Path.Combine(Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "ReDpettApp");
 
         if (!Directory.Exists(applicationFolderPath))
         {
             Directory.CreateDirectory(applicationFolderPath);
         }
-        string databaseFileName = Path.Combine(applicationFolderPath, "Projects.json");
+        string databaseFileName = Path.Combine(applicationFolderPath, "Project.json");
 
         if (!File.Exists(databaseFileName))
         {
