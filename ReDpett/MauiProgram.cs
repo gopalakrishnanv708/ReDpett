@@ -26,10 +26,11 @@ public static class MauiProgram
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
-        builder.Services.AddSingleton<AppDataService>();
-        builder.Services.AddSingleton<ListAppDataService>();
+        
+        builder.Services.AddScoped<ListAppDataService>();
 
-        builder.Services.AddSingleton<WeatherForecastService>();
+        //builder.Services.AddSingleton<AppDataService>();
+
         builder.Services.AddScoped<ISaveDataService, StoreDataService>();
 
         // Get an absolute path to the database file

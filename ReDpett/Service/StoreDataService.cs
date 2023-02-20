@@ -38,7 +38,7 @@ namespace ReDpett.Service
             return _data;
         }
 
-        public async void InsertOfflineDB()
+        public async void InsertOfflineDB(ListAppDataService __data)
         {
             try
             {
@@ -48,9 +48,7 @@ namespace ReDpett.Service
                 }
                 string databaseFileName = Path.Combine(applicationFolderPath, "Projects.json");
 
-                
-
-                string req_json_string = JsonConvert.SerializeObject(_data);
+                string req_json_string = JsonConvert.SerializeObject(__data);
                 File.WriteAllText(databaseFileName, req_json_string);
             }
             catch (Exception ex)

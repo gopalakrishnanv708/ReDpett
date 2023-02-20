@@ -7,7 +7,45 @@ using System.Threading.Tasks;
 
 namespace ReDpett.Service
 {
-    public class AppDataService
+    //public interface IAppDataService
+    //{
+    //     string FETP { get; set; }
+
+    //     string CohortNumber { get; set; }
+    //     string CohortEndDate { get; set; }
+    //     string CohortStartDate { get; set; }
+    //     string ResidentName { get; set; }
+    //     string Given_FirstName { get; set; }
+    //     string MiddleName { get; set; }
+    //     string Sur_LastName { get; set; }
+    //     string DOB { get; set; }
+    //     int Age { get; set; }
+    //     string Sex { get; set; }
+    //     string Email { get; set; }
+    //     string Phone { get; set; }
+    //     string Professional_Background { get; set; }
+    //     string Employer { get; set; }
+    //     string JobTitle { get; set; }
+    //     int YearsOnJob { get; set; }
+    //     string SupervisorName { get; set; }
+    //     string SiteAddress { get; set; }
+    //     string City { get; set; }
+    //     string State_Region_Pro { get; set; }
+    //     string Postal_Zip { get; set; }
+    //     string Country { get; set; }
+    //     string RPFL19_Longitude { get; set; }
+    //     string RPFL20_Latitude { get; set; }
+    //     string Secondary_Subnational_Unit { get; set; }
+    //     string Tertiary_Subnational_Unit { get; set; }
+    //     string FacilityName { get; set; }
+    //     string FacilityLevel { get; set; }
+    //     string GUID { get; set; }
+    //     int Status { get; set; }
+    //     List<FileData> File_Att_Info { get; set; }
+
+    //}
+
+    public class AppDataService 
     {
         public string FETP { get; set; }
         

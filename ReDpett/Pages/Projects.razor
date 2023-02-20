@@ -3,8 +3,14 @@
 @using ReDpett.Pages.Components
 @using Newtonsoft.Json
 @using ReDpett.Service
+@using Microsoft.AspNetCore.Components
+@using System.Net.Http.Headers
+@using System.Text
 
 @inject ISaveDataService _OfflineDataService;
+@inject NavigationManager NavigationManager;
+@inject ListAppDataService _listData;
+@inject HttpClient Http;
 
 
 <div class="inner-page-wrapper">
@@ -13,7 +19,7 @@
         <img src="images/border-svg.svg" alt="img" />
     </div>
     <div class="add-project-btn-wrap">
-        <a href="/add_project_step_1" class="add-btn"><span>Add Project</span> <img src="images/add-white.svg" alt="img" /></a>
+        <a href="/add_project_step_1/dummy_guid" class="add-btn"><span>Add Project</span> <img src="images/add-white.svg" alt="img" /></a>
     </div>
     <div class="page-heading-wrap">
         <h2>Current Projects</h2>
@@ -21,25 +27,35 @@
     </div>
     <div class="project-listing-wrap">
         <p class="projects-listing-subhead">Frontline Tier</p>
-
-        @if (_listData.appDataServices != null)
+        @if (_listData != null)
         {
-            @if (_listData.appDataServices.Count > 0)
+            @if (_listData.appDataServices != null)
             {
-                @foreach (AppDataService d in _listData.appDataServices)
+                @if (_listData.appDataServices.Count > 0)
                 {
-                    <div class="project-list-repeat">
-                        <div class="project-list-data">
-                            <h3>@d.ResidentName</h3>
-                            <p class="project-created-by">@d.Given_FirstName</p>
-                            <p>@d.DOB</p>
+                    @foreach (AppDataService d in _listData.appDataServices)
+                    {
+                        <div class="project-list-repeat">
+                            <div class="project-list-data">
+                                <h3>@d.ResidentName</h3>
+                                <p class="project-created-by">@d.Given_FirstName</p>
+                                <p>@d.DOB</p>
+                            </div>
+                            <div class="project-list-action">
+                                <span class="priject-list-action-btn" @onclick=@(()=>OnEdit(d))><img src="images/edit.svg" alt="img" /></span>
+                                @if(d.Status == 1)
+                                {
+                                    <span class="priject-list-action-btn"><img src="images/cloud.svg" alt="img" /></span>
+                                }
+                                else
+                                {
+                                    <span class="priject-list-action-btn"><img src="images/cloud_nonsync.svg" alt="img" /></span>
+                                }
+
+                                <span class="priject-list-action-btn"><img src="images/close.svg" alt="img" /></span>
+                            </div>
                         </div>
-                        <div class="project-list-action">
-                            <span class="priject-list-action-btn"><img src="images/edit.svg" alt="img" /></span>
-                            <span class="priject-list-action-btn"><img src="images/cloud.svg" alt="img" /></span>
-                            <span class="priject-list-action-btn"><img src="images/close.svg" alt="img" /></span>
-                        </div>
-                    </div>
+                    }
                 }
             }
         }
@@ -54,7 +70,7 @@
                 </svg>
                 <p>Home</p>
             </a>
-            <a href="/add_project_step_1" class="footer-link">
+            <a href="/add_project_step_1/dummy_guid" class="footer-link">
                 <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M14.4189 3.47566C14.4189 3.23918 14.2316 3.04053 13.988 3.04053H8.98668C6.65458 3.04053 4.76268 4.96081 4.76268 7.30677V17.5041C4.76268 19.9636 6.74824 21.9596 9.18336 21.9596H16.6386C18.9613 21.9596 20.8439 20.0582 20.8439 17.7122V10.1068C20.8439 9.8703 20.6565 9.68111 20.4224 9.68111C20.2046 9.68111 19.9649 9.68387 19.7447 9.68641C19.6257 9.68779 19.5123 9.6891 19.4112 9.68986L19.2517 9.69057C19.0631 9.69057 18.8495 9.68875 18.6092 9.68672C18.3004 9.6841 17.9474 9.68111 17.5471 9.68111C15.8331 9.67165 14.4189 8.25272 14.4189 6.52163V3.47566ZM16.5535 3.58161C16.2735 3.28742 15.7837 3.48985 15.7837 3.89756V6.39109C15.7837 7.43731 16.6369 8.29907 17.6728 8.29907C18.3256 8.30569 19.2331 8.30853 20.003 8.30569C20.3973 8.30475 20.5977 7.82893 20.3242 7.54231C19.8309 7.02425 19.1435 6.30216 18.4527 5.57651C17.7586 4.84732 17.061 4.11453 16.5535 3.58161Z" fill="#D0D0D0" />
                     <path d="M12.8033 17.3393V10.7802" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -79,9 +95,57 @@
 </div>
 
 @code {
-    AppDataService service = null;
+    private AppDataService data = new AppDataService();
 
-    ListAppDataService _listData;
+    public Projects()
+    {
+        // Register for connectivity changes, be sure to unsubscribe when finished
+        Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+    }
+
+    async void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+    {
+        NetworkAccess accessType = Connectivity.Current.NetworkAccess;
+
+        if (accessType == NetworkAccess.Internet)
+        {
+            _listData = await _OfflineDataService.GetDataFromOfflineDB();
+            if (_listData != null)
+            {
+                var _data = _listData.appDataServices.FindAll(x => x.Status == 0);
+
+                foreach(AppDataService appData in _data)
+                {
+                    string req_json_string = JsonConvert.SerializeObject(appData);
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var req_tran_res = await Http.PostAsync("https://redpett-fl-webapp-v3.azurewebsites.net/Projects/Insert", new StringContent(req_json_string, Encoding.UTF8,
+                                                          "application/json"));
+                    string req_post_content = await req_tran_res.Content.ReadAsStringAsync();
+                    if (req_tran_res.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        appData.Status = 1;
+                        var _data_new = _listData.appDataServices.Find(x => x.GUID == appData.GUID);
+                        if (_data_new != null)
+                        {
+                            _listData.appDataServices.Remove(_data_new);
+                            _data_new = appData;
+                            _listData.appDataServices.Add(_data_new);
+                        }
+                        _OfflineDataService.InsertOfflineDB(_listData);
+                    }
+                }
+                
+            }
+
+        }
+        StateHasChanged();
+    }
+
+    public void OnEdit(AppDataService Edit_data)
+    {
+        StateHasChanged();
+        NavigationManager.NavigateTo("/add_project_step_1/" + Edit_data.GUID + "/");
+    }
 
     protected override async void OnInitialized()
     {

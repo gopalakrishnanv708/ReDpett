@@ -1,9 +1,8 @@
-﻿@page "/add_project_step_2"
+﻿@page "/add_project_step_2/{E_GUID}"
 
 @using ReDpett.Pages.Components
 @using ReDpett.Service
 @inject NavigationManager NavigationManager;
-@inject AppDataService data;
 @inject ListAppDataService _listData;
 @inject ISaveDataService _OfflineDataService;
 
@@ -432,7 +431,7 @@
                 </svg>
                 <p>Home</p>
             </a>
-            <a href="/add_project_step_1" class="footer-link active">
+            <a @onclick=GoBackPage class="footer-link active">
                 <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M14.4189 3.47566C14.4189 3.23918 14.2316 3.04053 13.988 3.04053H8.98668C6.65458 3.04053 4.76268 4.96081 4.76268 7.30677V17.5041C4.76268 19.9636 6.74824 21.9596 9.18336 21.9596H16.6386C18.9613 21.9596 20.8439 20.0582 20.8439 17.7122V10.1068C20.8439 9.8703 20.6565 9.68111 20.4224 9.68111C20.2046 9.68111 19.9649 9.68387 19.7447 9.68641C19.6257 9.68779 19.5123 9.6891 19.4112 9.68986L19.2517 9.69057C19.0631 9.69057 18.8495 9.68875 18.6092 9.68672C18.3004 9.6841 17.9474 9.68111 17.5471 9.68111C15.8331 9.67165 14.4189 8.25272 14.4189 6.52163V3.47566ZM16.5535 3.58161C16.2735 3.28742 15.7837 3.48985 15.7837 3.89756V6.39109C15.7837 7.43731 16.6369 8.29907 17.6728 8.29907C18.3256 8.30569 19.2331 8.30853 20.003 8.30569C20.3973 8.30475 20.5977 7.82893 20.3242 7.54231C19.8309 7.02425 19.1435 6.30216 18.4527 5.57651C17.7586 4.84732 17.061 4.11453 16.5535 3.58161Z" fill="#D0D0D0" />
                     <path d="M12.8033 17.3393V10.7802" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -458,6 +457,8 @@
 
 @code {
 
+    [Parameter]
+    public string E_GUID { get; set; }
     public string Professional_Background { get; set; }
     public string Employer { get; set; }
     public string JobTitle { get; set; }
@@ -475,9 +476,21 @@
     public string FacilityName { get; set; }
     public string FacilityLevel { get; set; }
     private CancellationTokenSource _cancelTokenSource;
+    private AppDataService data = new AppDataService();
 
     protected async override void OnInitialized()
     {
+        _listData = await _OfflineDataService.GetDataFromOfflineDB();
+
+        if (_listData != null)
+        {
+            var _data = _listData.appDataServices.Find(x => x.GUID == E_GUID);
+            if (_data != null)
+            {
+                data = _data;
+            }
+        }
+
         Professional_Background = data.Professional_Background;
         Employer = data.Employer;
         JobTitle = data.JobTitle;
@@ -496,6 +509,7 @@
         FacilityLevel = data.FacilityLevel;
         await GetCurrentLocation();
     }
+
     public async Task GetCurrentLocation()
     {
         try
@@ -522,22 +536,23 @@
             // Unable to get location
         }
     }
+
     private void GoNextPage()
     {
         SaveData();
-        NavigationManager.NavigateTo("/add_project_step_3");
+        NavigationManager.NavigateTo("/add_project_step_3/"+data.GUID);
     }
 
     private void GoBackPage()
     {
         SaveData();
-        NavigationManager.NavigateTo("/add_project_step_1");
+        NavigationManager.NavigateTo("/add_project_step_1/"+data.GUID);
     }
 
     private void GoToStepTwo()
     {
         SaveData();
-        NavigationManager.NavigateTo("/add_project_step_2");
+        NavigationManager.NavigateTo("/add_project_step_2/"+data.GUID);
     }
 
     private async void OnSaveData()
@@ -565,6 +580,17 @@
         data.FacilityName = FacilityName;
         data.FacilityLevel = FacilityLevel;
 
-        //_listData.appDataServices.Add(data);
+        if(_listData != null)
+        {
+            var _data = _listData.appDataServices.Find(x => x.GUID == data.GUID);
+            if (_data != null)
+            {
+                _listData.appDataServices.Remove(_data);
+                _data = data;
+                _listData.appDataServices.Add(_data);
+            }
+        }
+
+        _OfflineDataService.InsertOfflineDB(_listData);
     }
 }
